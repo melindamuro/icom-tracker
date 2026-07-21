@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICoM Publication Repository & Manuscript Tracker</title>
+    <link rel="stylesheet" href="./styles.css?v=20260721a" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="masthead">
+        <img
+          class="masthead__image"
+          src="./assets/coastal-modeling-banner.png"
+          alt="Coastal model visualization"
+        />
+        <div class="masthead__overlay"></div>
+        <nav class="topbar" aria-label="Application">
+          <div class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true">ICoM</span>
+            <div>
+              <p class="eyebrow">AI-enabled Integrated Coastal Modeling</p>
+              <h1>Publication Repository & Manuscript Tracker</h1>
+            </div>
+          </div>
+          <div class="top-actions">
+            <label class="role-switch">
+              <span>View as</span>
+              <select id="accessRoleSelect" aria-label="View as role"></select>
+            </label>
+            <button class="icon-button" id="importButton" title="Import records" aria-label="Import records" hidden>⇧</button>
+            <button class="icon-button" id="exportJsonButton" title="Export JSON" aria-label="Export JSON" hidden>⤓</button>
+            <button class="ghost-button" id="auditDrupalButton" hidden>Drupal audit</button>
+            <button class="command-button" id="newRecordButton">New record</button>
+          </div>
+        </nav>
+        <section class="masthead__content" aria-label="Publication summary">
+          <div>
+            <p class="date-chip" id="todayStamp"></p>
+            <h2>
+              <span>Track manuscripts from writing</span>
+              <span>through journal review</span>
+              <span>to published citation.</span>
+            </h2>
+          </div>
+          <div class="metric-grid" id="metricGrid"></div>
+        </section>
+      </header>
+
+      <main class="workspace">
+        <section class="toolbar" aria-label="Filters">
+          <label class="search-box">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Title, lead, journal, DOI, program, role" autocomplete="off" />
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="statusFilter"></select>
+          </label>
+          <label>
+            <span>Topic</span>
+            <select id="topicFilter"></select>
+          </label>
+          <label>
+            <span>Program area</span>
+            <select id="programAreaFilter"></select>
+          </label>
+          <label>
+            <span>Role</span>
+            <select id="publicationRoleFilter"></select>
+          </label>
+          <label>
+            <span>Year</span>
+            <select id="yearFilter"></select>
+          </label>
+          <label>
+            <span>Fiscal year</span>
+            <select id="fiscalYearFilter"></select>
+          </label>
+          <label>
+            <span>Sort</span>
+            <select id="sortSelect">
+              <option value="updated-desc">Recently updated</option>
+              <option value="year-desc">Year, newest</option>
+              <option value="due-asc">Next due</option>
+              <option value="program-asc">Program area</option>
+              <option value="role-asc">Publication role</option>
+              <option value="title-asc">Title</option>
+            </select>
+          </label>
+          <button class="ghost-button" id="resetFiltersButton">Reset</button>
+          <button class="ghost-button" id="exportCsvButton">CSV</button>
+        </section>
+
+        <section class="access-banner" id="accessBanner" aria-live="polite"></section>
+
+        <section class="intake-panel" id="intakePanel" aria-label="Document reader">
+          <div class="section-heading">
+            <h3>Document Reader</h3>
+            <div class="report-actions">
+              <button class="ghost-button" id="choosePdfButton">Choose PDFs</button>
+              <button class="ghost-button" id="clearIntakeButton">Clear</button>
+            </div>
+          </div>
+          <div class="drop-zone" id="pdfDropZone" role="button" tabindex="0">
+            <strong>Drop manuscripts or publisher PDFs</strong>
+            <span>Candidate repository records appear below</span>
+          </div>
+          <div class="intake-list" id="intakeMount"></div>
+        </section>
+
+        <section class="split-layout">
+          <aside class="side-rail" aria-label="Pipeline">
+            <div class="section-heading">
+              <h3>Pipeline</h3>
+              <span id="visibleCount"></span>
+            </div>
+            <div class="pipeline" id="pipeline"></div>
+            <div class="section-heading compact">
+              <h3>Topics</h3>
+            </div>
+            <div class="topic-map" id="topicMap"></div>
+          </aside>
+
+          <section class="records-panel" aria-label="Publication records">
+            <div class="section-heading">
+              <h3>Records</h3>
+              <div class="view-tabs" role="tablist" aria-label="Record view">
+                <button class="tab is-active" data-view="cards" role="tab" aria-selected="true">Cards</button>
+                <button class="tab" data-view="table" role="tab" aria-selected="false">Table</button>
+              </div>
+            </div>
+            <div id="recordsMount"></div>
+          </section>
+
+          <section class="reports-panel" id="reportsPanel" aria-label="Reports">
+            <div class="section-heading">
+              <h3>Reports</h3>
+              <div class="report-actions">
+                <button class="ghost-button" id="exportReportButton">CSV</button>
+                <button class="ghost-button" id="exportReportExcelButton">Excel</button>
+                <button class="ghost-button" id="exportReportPdfButton">PDF list</button>
+              </div>
+            </div>
+            <div class="report-controls">
+              <label>
+                <span>Report program area</span>
+                <select id="reportProgramAreaSelect"></select>
+              </label>
+              <label>
+                <span>Report role</span>
+                <select id="reportPublicationRoleSelect"></select>
+              </label>
+              <label>
+                <span>Group by</span>
+                <select id="reportGroupSelect">
+                  <option value="programAreas">Program area</option>
+                  <option value="publicationRole">Publication role</option>
+                  <option value="lead">Lead author</option>
+                  <option value="venue">Journal</option>
+                  <option value="lifecycle">Lifecycle stage</option>
+                  <option value="status">Status</option>
+                  <option value="type">Publication type</option>
+                  <option value="year">Year</option>
+                  <option value="fiscalYear">Fiscal year</option>
+                  <option value="verification">Verification</option>
+                </select>
+              </label>
+              <label>
+                <span>Focus</span>
+                <select id="reportFocusSelect">
+                  <option value="all">All matching records</option>
+                  <option value="journalPipeline">Manuscript pipeline</option>
+                  <option value="reportReady">Report ready</option>
+                  <option value="notReportReady">Not report ready</option>
+                  <option value="needsVerification">Needs verification</option>
+                  <option value="missingDoi">Missing DOI</option>
+                  <option value="authorAudit">Author check needed</option>
+                  <option value="excludedReports">Excluded from reports</option>
+                </select>
+              </label>
+            </div>
+            <div id="reportMount"></div>
+          </section>
+        </section>
+
+        <section class="database-panel" id="databasePanel" aria-label="Publication database checks">
+          <div class="section-heading">
+            <h3>Database Checks</h3>
+            <div class="report-actions">
+              <button class="ghost-button" id="checkDatabasesButton">Check visible</button>
+              <button class="ghost-button" id="checkLinksButton">Check links</button>
+              <button class="ghost-button" id="clearDatabaseStatusButton">Clear</button>
+            </div>
+          </div>
+          <div class="database-controls">
+            <label>
+              <span>Databases</span>
+              <select id="databaseSourceSelect">
+                <option value="crossref-osti">Crossref + OSTI</option>
+                <option value="crossref">Crossref</option>
+                <option value="osti">OSTI</option>
+              </select>
+            </label>
+            <label>
+              <span>Limit</span>
+              <select id="databaseLimitSelect">
+                <option value="25">First 25 visible</option>
+                <option value="50">First 50 visible</option>
+                <option value="all">All visible</option>
+              </select>
+            </label>
+          </div>
+          <div class="database-status" id="databaseStatus" aria-live="polite">Ready</div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="recordDialog">
+      <form method="dialog" class="record-form" id="recordForm">
+        <div class="dialog-head">
+          <div>
+            <p class="eyebrow">Publication / manuscript record</p>
+            <h2 id="dialogTitle">New record</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="Close">×</button>
+        </div>
+
+        <input type="hidden" id="recordId" />
+        <label class="span-2">
+          <span>Title</span>
+          <input id="titleField" required maxlength="260" />
+        </label>
+        <label>
+          <span>Year</span>
+          <input id="yearField" type="number" min="2000" max="2100" required />
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="statusField" required></select>
+        </label>
+        <label>
+          <span>Verification</span>
+          <select id="verificationField" required></select>
+        </label>
+        <label>
+          <span>Visibility</span>
+          <select id="visibilityField" required></select>
+        </label>
+        <label>
+          <span>Lead</span>
+          <input id="leadField" maxlength="80" />
+        </label>
+        <label class="span-2">
+          <span>Authors</span>
+          <textarea id="authorsField" rows="2" maxlength="520" placeholder="semicolon separated"></textarea>
+        </label>
+        <label>
+          <span>Journal</span>
+          <input id="venueField" maxlength="120" />
+        </label>
+        <label>
+          <span>Type</span>
+          <select id="typeField"></select>
+        </label>
+        <label>
+          <span>Publication role</span>
+          <select id="publicationRoleField"></select>
+        </label>
+        <fieldset class="program-area-field span-2" id="programAreasField">
+          <legend>Program area</legend>
+          <div class="program-area-options">
+            <label>
+              <input type="checkbox" value="RGMA" />
+              <span>RGMA</span>
+            </label>
+            <label>
+              <input type="checkbox" value="MSD" />
+              <span>MSD</span>
+            </label>
+            <label>
+              <input type="checkbox" value="ESMD" />
+              <span>ESMD</span>
+            </label>
+            <label>
+              <input type="checkbox" value="CC" />
+              <span>CC</span>
+            </label>
+          </div>
+        </fieldset>
+        <label>
+          <span>Topic</span>
+          <select id="topicField"></select>
+        </label>
+        <label>
+          <span>Due date</span>
+          <input id="dueField" type="date" />
+        </label>
+        <label>
+          <span>Submitted</span>
+          <input id="submittedField" type="date" />
+        </label>
+        <label>
+          <span>Accepted</span>
+          <input id="acceptedField" type="date" />
+        </label>
+        <label>
+          <span>Online first</span>
+          <input id="onlineFirstField" type="date" />
+        </label>
+        <label>
+          <span>Published</span>
+          <input id="publishedField" type="date" />
+        </label>
+        <label>
+          <span>Indexed</span>
+          <input id="indexedField" type="date" />
+        </label>
+        <label>
+          <span>DOI</span>
+          <input id="doiField" maxlength="180" />
+        </label>
+        <label>
+          <span>Publisher article / DOI link</span>
+          <input id="urlField" type="url" maxlength="240" />
+        </label>
+        <label class="span-2">
+          <span>Publisher PDF link</span>
+          <input id="pdfUrlField" type="url" maxlength="300" />
+        </label>
+        <label>
+          <span>Last checked</span>
+          <input id="verifiedField" type="date" />
+        </label>
+        <label>
+          <span>Reviewed by</span>
+          <input id="verifiedByField" maxlength="90" />
+        </label>
+        <label class="span-2" hidden>
+          <span>Source</span>
+          <input id="sourceField" maxlength="180" />
+        </label>
+        <label class="span-2">
+          <span>Tags</span>
+          <input id="tagsField" placeholder="comma separated" maxlength="220" />
+        </label>
+        <label class="span-2" hidden>
+          <span>Next action</span>
+          <textarea id="actionField" rows="3" maxlength="360"></textarea>
+        </label>
+        <label class="span-2">
+          <span>Notes</span>
+          <textarea id="notesField" rows="4" maxlength="620"></textarea>
+        </label>
+        <label class="checkbox-line span-2">
+          <input id="excludeFromReportsField" type="checkbox" />
+          <span>Exclude from formal reports</span>
+        </label>
+        <label class="span-2">
+          <span>Exclusion reason</span>
+          <input id="exclusionReasonField" maxlength="240" placeholder="Book chapter, dataset-only record, internal tracking only..." />
+        </label>
+
+        <div class="readiness-panel span-2" id="readinessPanel" aria-live="polite">
+          <div class="readiness-panel__head">
+            <strong id="readinessStatus">Report readiness</strong>
+            <span id="readinessSummary"></span>
+          </div>
+          <ul id="readinessChecklist"></ul>
+        </div>
+
+        <div class="duplicate-warning span-2" id="duplicateWarning" hidden aria-live="polite">
+          <div>
+            <strong>Potential duplicate</strong>
+            <span id="duplicateWarningText"></span>
+          </div>
+          <button class="ghost-button" type="button" id="openDuplicateButton">Open existing</button>
+        </div>
+
+        <menu class="dialog-actions">
+          <button class="ghost-button danger" type="button" id="deleteButton">Delete</button>
+          <span class="dialog-spacer"></span>
+          <button class="ghost-button" value="cancel">Cancel</button>
+          <button class="command-button" id="saveButton" value="default">Save record</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <input id="fileInput" type="file" accept="application/json,text/csv,.json,.csv" hidden />
+    <input id="pdfFileInput" type="file" accept="application/pdf,.pdf" multiple hidden />
+    <template id="emptyTemplate">
+      <div class="empty-state">
+        <p>No records match the current filters.</p>
+        <button class="ghost-button" id="emptyResetButton">Reset filters</button>
+      </div>
+    </template>
+
+    <script src="./workbook-records.js?v=20260720"></script>
+    <script src="./inbox-records.js?v=20260720"></script>
+    <script src="./drupal-records.js?v=20260720"></script>
+    <script src="./app.js?v=20260721a"></script>
+  </body>
+</html>
