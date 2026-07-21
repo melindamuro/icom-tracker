@@ -1,4 +1,6 @@
 const STORAGE_KEY = "icom-publication-tracker-v5";
+const STORAGE_BACKUP_KEY = `${STORAGE_KEY}-backup`;
+const STORAGE_META_KEY = `${STORAGE_KEY}-meta`;
 const ACCESS_ROLE_KEY = "icom-publication-tracker-access-role";
 const PUBLIC_STATIC_EXPORT = Boolean(window.ICOM_PUBLIC_STATIC_EXPORT);
 
@@ -366,6 +368,10 @@ const fallbackRecords = dedupeRecords([
 
 const defaultRecords = workbookRecords.length ? dedupeRecords([...inboxRecords, ...workbookRecords]) : dedupeRecords([...inboxRecords, ...fallbackRecords]);
 
+let persistenceNotice = {
+  tone: "info",
+  message: "Static site: edits save only in this browser until exported.",
+};
 let records = loadRecords();
 let currentView = "cards";
 let intakeDrafts = [];
@@ -376,6 +382,7 @@ const els = {
   metricGrid: document.querySelector("#metricGrid"),
   accessRoleSelect: document.querySelector("#accessRoleSelect"),
   accessBanner: document.querySelector("#accessBanner"),
+  saveStatus: document.querySelector("#saveStatus"),
   searchInput: document.querySelector("#searchInput"),
   statusFilter: document.querySelector("#statusFilter"),
   topicFilter: document.querySelector("#topicFilter"),
@@ -491,7 +498,9 @@ function initialise() {
 
 function bindEvents() {
   els.accessRoleSelect.addEventListener("change", () => {
-    localStorage.setItem(ACCESS_ROLE_KEY, els.accessRoleSelect.value);
+    try {
+      storageSet(ACCESS_ROLE_KEY, els.accessRoleSelect.value);
+    } catch {}
     render();
   });
 
@@ -576,7 +585,7 @@ function bindEvents() {
     const id = els.fields.id.value;
     if (!id) return;
     records = records.filter((record) => record.id !== id);
-    persist();
+    if (!persist()) return;
     els.recordDialog.close();
     render();
   });
@@ -584,17 +593,123 @@ function bindEvents() {
 
 function loadRecords() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return defaultRecords;
+    const saved = storageGet(STORAGE_KEY);
+    if (!saved) {
+      setPersistenceNotice("info", githubPagesMode()
+        ? "Static GitHub Pages mode: edits save only in this browser. Export JSON to update the deployed tracker."
+        : "No browser-saved edits found; showing deployed tracker data.");
+      return defaultRecords;
+    }
     const parsed = JSON.parse(saved);
-    return Array.isArray(parsed) && parsed.length ? mergeRecords(defaultRecords, parsed.map(normaliseRecord)) : defaultRecords;
-  } catch {
+    if (Array.isArray(parsed) && parsed.length) {
+      const meta = readStorageMeta();
+      setPersistenceNotice("success", `Loaded browser-saved edits${meta?.savedAt ? ` from ${formatStorageDate(meta.savedAt)}` : ""}.`);
+      return mergeRecords(defaultRecords, parsed.map(normaliseRecord));
+    }
+    return defaultRecords;
+  } catch (error) {
+    const backup = loadBackupRecords();
+    if (backup.length) {
+      setPersistenceNotice("warning", `Primary browser save could not load; recovered ${backup.length} records from backup.`);
+      return mergeRecords(defaultRecords, backup.map(normaliseRecord));
+    }
+    setPersistenceNotice("error", `Browser-saved data could not load: ${errorMessage(error)}. Showing deployed tracker data.`);
     return defaultRecords;
   }
 }
 
 function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(records, null, 2));
+  try {
+    const payload = JSON.stringify(records, null, 2);
+    const existing = storageGet(STORAGE_KEY);
+    if (existing) storageSet(STORAGE_BACKUP_KEY, existing);
+    storageSet(STORAGE_KEY, payload);
+    storageSet(STORAGE_META_KEY, JSON.stringify({
+      savedAt: new Date().toISOString(),
+      recordCount: records.length,
+      origin: window.location.origin,
+      path: window.location.pathname,
+      browserOnly: true,
+    }));
+    const confirmed = storageGet(STORAGE_KEY);
+    if (confirmed !== payload) throw new Error("Browser storage did not confirm the saved data.");
+    setPersistenceNotice(
+      "success",
+      githubPagesMode()
+        ? `Saved ${records.length} records in this browser only. Export JSON to update GitHub.`
+        : `Saved ${records.length} records in this browser.`
+    );
+    return true;
+  } catch (error) {
+    setPersistenceNotice("error", `Save failed: ${errorMessage(error)}. Use Export JSON before closing this page.`);
+    window.alert(`The tracker could not save this change in browser storage.\n\n${errorMessage(error)}\n\nUse Export JSON before closing this page so the work is not lost.`);
+    return false;
+  }
+}
+
+function storageGet(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    setPersistenceNotice("error", `Browser storage is unavailable: ${errorMessage(error)}.`);
+    return "";
+  }
+}
+
+function storageSet(key, value) {
+  localStorage.setItem(key, value);
+}
+
+function readStorageMeta() {
+  try {
+    const meta = storageGet(STORAGE_META_KEY);
+    return meta ? JSON.parse(meta) : null;
+  } catch {
+    return null;
+  }
+}
+
+function loadBackupRecords() {
+  try {
+    const backup = storageGet(STORAGE_BACKUP_KEY);
+    const parsed = backup ? JSON.parse(backup) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function setPersistenceNotice(tone, message) {
+  persistenceNotice = { tone, message };
+  renderSaveStatus();
+}
+
+function renderSaveStatus() {
+  if (!safeEls("saveStatus")) return;
+  if (isPublicRole()) {
+    els.saveStatus.hidden = true;
+    return;
+  }
+  els.saveStatus.hidden = false;
+  els.saveStatus.dataset.tone = persistenceNotice.tone || "info";
+  els.saveStatus.textContent = persistenceNotice.message || "";
+}
+
+function safeEls(key) {
+  try {
+    return Boolean(els?.[key]);
+  } catch {
+    return false;
+  }
+}
+
+function githubPagesMode() {
+  return /github\.io$/i.test(window.location.hostname);
+}
+
+function formatStorageDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
 }
 
 function hydrateSelect(select, values) {
@@ -616,7 +731,7 @@ function initialAccessRole() {
   if (PUBLIC_STATIC_EXPORT) return "public";
   const queryRole = new URLSearchParams(window.location.search).get("view");
   if (accessRoles.some((role) => role.value === queryRole)) return queryRole;
-  const savedRole = localStorage.getItem(ACCESS_ROLE_KEY);
+  const savedRole = storageGet(ACCESS_ROLE_KEY);
   return accessRoles.some((role) => role.value === savedRole) ? savedRole : "admin";
 }
 
@@ -737,6 +852,7 @@ function applyAccessMode() {
   els.importButton.hidden = !adminMode;
   els.exportJsonButton.hidden = !adminMode;
   els.auditDrupalButton.hidden = !adminMode;
+  renderSaveStatus();
 }
 
 function renderAccessBanner(filtered) {
@@ -1318,7 +1434,7 @@ async function checkVisibleRecords() {
       if (result.error) stats.errors += 1;
       await wait(250);
     }
-    persist();
+    if (!persist()) return;
     render();
     els.databaseStatus.textContent = `Checked ${stats.checked}. Matched ${stats.matched}. Updated ${stats.updated}. Errors ${stats.errors}.`;
   } finally {
@@ -1353,7 +1469,7 @@ async function checkVisibleLinks() {
       else stats.review += 1;
       await wait(180);
     }
-    persist();
+    if (!persist()) return;
     render();
     els.databaseStatus.textContent = `Link check complete. Checked ${stats.checked}. OK ${stats.ok}. Review ${stats.review}.`;
   } finally {
@@ -1456,7 +1572,7 @@ async function checkRecordDatabases(record, options = {}) {
     patch.updated = new Date().toISOString();
     applyRecordPatch(record.id, patch);
     if (persistEach) {
-      persist();
+      if (!persist()) return { matched: patches.length > 0, updated: false, error: "Save failed" };
       render();
     }
   }
@@ -2595,7 +2711,7 @@ function addPdfDraft(index) {
   const duplicate = findDuplicateRecord(record);
   if (duplicate && !confirmDuplicateSave(duplicate)) return;
   records = mergeRecords(records, [record]);
-  persist();
+  if (!persist()) return;
   intakeDrafts.splice(index, 1);
   renderIntakeDrafts();
   render();
@@ -3286,7 +3402,7 @@ function saveRecordFromForm() {
   else records.unshift(nextRecord);
   records = dedupeRecords(records);
 
-  persist();
+  if (!persist()) return;
   els.recordDialog.close();
   render();
 }
@@ -3309,6 +3425,7 @@ function resetFilters() {
 
 function downloadJson(list) {
   downloadFile(`icom-publications-${dateSlug()}.json`, JSON.stringify(list, null, 2), "application/json");
+  setPersistenceNotice("success", `Exported ${list.length} records. Use this JSON to update the deployed tracker data.`);
 }
 
 function downloadDrupalAudit() {
@@ -3462,7 +3579,7 @@ async function importFile(event) {
   const normalised = imported.map(normaliseRecord);
 
   records = mergeRecords(records, normalised);
-  persist();
+  if (!persist()) return;
   render();
 }
 
