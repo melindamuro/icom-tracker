@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ICoM Publication Repository & Manuscript Tracker</title>
-    <link rel="stylesheet" href="./styles.css?v=20260721a" />
+    <link rel="stylesheet" href="./styles.css?v=20260721c" />
   </head>
   <body>
     <div class="app-shell">
@@ -32,6 +32,7 @@
             <button class="icon-button" id="exportJsonButton" title="Export JSON" aria-label="Export JSON" hidden>⤓</button>
             <button class="ghost-button" id="auditDrupalButton" hidden>Drupal audit</button>
             <button class="command-button" id="newRecordButton">New record</button>
+            <span class="save-status" id="saveStatus" aria-live="polite"></span>
           </div>
         </nav>
         <section class="masthead__content" aria-label="Publication summary">
@@ -94,6 +95,56 @@
 
         <section class="access-banner" id="accessBanner" aria-live="polite"></section>
 
+        <section class="reports-panel" id="reportsPanel" aria-label="Reports">
+          <div class="section-heading">
+            <h3>Reports</h3>
+            <div class="report-actions">
+              <button class="ghost-button" id="exportReportButton">CSV</button>
+              <button class="ghost-button" id="exportReportExcelButton">Excel</button>
+              <button class="ghost-button" id="exportReportPdfButton">PDF list</button>
+            </div>
+          </div>
+          <div class="report-controls">
+            <label>
+              <span>Report program area</span>
+              <select id="reportProgramAreaSelect"></select>
+            </label>
+            <label>
+              <span>Report role</span>
+              <select id="reportPublicationRoleSelect"></select>
+            </label>
+            <label>
+              <span>Group by</span>
+              <select id="reportGroupSelect">
+                <option value="programAreas">Program area</option>
+                <option value="publicationRole">Publication role</option>
+                <option value="lead">Lead author</option>
+                <option value="venue">Journal</option>
+                <option value="lifecycle">Lifecycle stage</option>
+                <option value="status">Status</option>
+                <option value="type">Publication type</option>
+                <option value="year">Year</option>
+                <option value="fiscalYear">Fiscal year</option>
+                <option value="verification">Verification</option>
+              </select>
+            </label>
+            <label>
+              <span>Focus</span>
+              <select id="reportFocusSelect">
+                <option value="all">All matching records</option>
+                <option value="journalPipeline">Manuscript pipeline</option>
+                <option value="reportReady">Report ready</option>
+                <option value="notReportReady">Not report ready</option>
+                <option value="needsVerification">Needs verification</option>
+                <option value="missingDoi">Missing DOI</option>
+                <option value="authorAudit">Author check needed</option>
+                <option value="excludedReports">Excluded from reports</option>
+              </select>
+            </label>
+          </div>
+          <div id="reportMount"></div>
+        </section>
+
         <section class="intake-panel" id="intakePanel" aria-label="Document reader">
           <div class="section-heading">
             <h3>Document Reader</h3>
@@ -133,55 +184,6 @@
             <div id="recordsMount"></div>
           </section>
 
-          <section class="reports-panel" id="reportsPanel" aria-label="Reports">
-            <div class="section-heading">
-              <h3>Reports</h3>
-              <div class="report-actions">
-                <button class="ghost-button" id="exportReportButton">CSV</button>
-                <button class="ghost-button" id="exportReportExcelButton">Excel</button>
-                <button class="ghost-button" id="exportReportPdfButton">PDF list</button>
-              </div>
-            </div>
-            <div class="report-controls">
-              <label>
-                <span>Report program area</span>
-                <select id="reportProgramAreaSelect"></select>
-              </label>
-              <label>
-                <span>Report role</span>
-                <select id="reportPublicationRoleSelect"></select>
-              </label>
-              <label>
-                <span>Group by</span>
-                <select id="reportGroupSelect">
-                  <option value="programAreas">Program area</option>
-                  <option value="publicationRole">Publication role</option>
-                  <option value="lead">Lead author</option>
-                  <option value="venue">Journal</option>
-                  <option value="lifecycle">Lifecycle stage</option>
-                  <option value="status">Status</option>
-                  <option value="type">Publication type</option>
-                  <option value="year">Year</option>
-                  <option value="fiscalYear">Fiscal year</option>
-                  <option value="verification">Verification</option>
-                </select>
-              </label>
-              <label>
-                <span>Focus</span>
-                <select id="reportFocusSelect">
-                  <option value="all">All matching records</option>
-                  <option value="journalPipeline">Manuscript pipeline</option>
-                  <option value="reportReady">Report ready</option>
-                  <option value="notReportReady">Not report ready</option>
-                  <option value="needsVerification">Needs verification</option>
-                  <option value="missingDoi">Missing DOI</option>
-                  <option value="authorAudit">Author check needed</option>
-                  <option value="excludedReports">Excluded from reports</option>
-                </select>
-              </label>
-            </div>
-            <div id="reportMount"></div>
-          </section>
         </section>
 
         <section class="database-panel" id="databasePanel" aria-label="Publication database checks">
@@ -398,6 +400,6 @@
     <script src="./workbook-records.js?v=20260720"></script>
     <script src="./inbox-records.js?v=20260720"></script>
     <script src="./drupal-records.js?v=20260720"></script>
-    <script src="./app.js?v=20260721a"></script>
+    <script src="./app.js?v=20260721c"></script>
   </body>
 </html>

@@ -94,6 +94,37 @@ button {
   padding: 22px 0;
 }
 
+.save-status {
+  max-width: 260px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.13);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.save-status:empty,
+.save-status[hidden] {
+  display: none;
+}
+
+.save-status[data-tone="success"] {
+  border-color: rgba(105, 211, 156, 0.5);
+}
+
+.save-status[data-tone="warning"] {
+  border-color: rgba(255, 210, 120, 0.58);
+  color: #ffe8b8;
+}
+
+.save-status[data-tone="error"] {
+  border-color: rgba(255, 150, 135, 0.65);
+  color: #ffd5cf;
+}
+
 .brand-lockup,
 .top-actions,
 .dialog-head,
@@ -444,7 +475,7 @@ button:focus-visible {
 }
 
 .reports-panel {
-  grid-column: 2;
+  margin-top: 18px;
   padding: 16px;
   min-width: 0;
 }
@@ -1133,10 +1164,6 @@ dialog::backdrop {
 
   .side-rail {
     position: static;
-  }
-
-  .reports-panel {
-    grid-column: auto;
   }
 
   .toolbar {
