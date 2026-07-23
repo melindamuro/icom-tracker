@@ -1,0 +1,1736 @@
+{
+  "schema": "icom-tracker annualReports patch v1",
+  "generated": "2026-07-23",
+  "sourcePublicationList": "icom-publication-list-2026-07-23 (2).pdf",
+  "matchKey": "DOI where available; normalized title and author/research-lineage fallback for working-title changes",
+  "updates": [
+    {
+      "recordNumber": 7,
+      "doi": "10.5194/nhess-25-3619-2025",
+      "title": "Disentangling atmospheric, hydrological, and coupling uncertainties in compound flood modeling within a coupled Earth system model",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 11,
+      "doi": "10.1029/2025ef006915",
+      "title": "Mapping Philadelphia-s Floodscape: A 35-Year Analysis of Coastal Urban Flood Drivers",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 14,
+      "doi": "10.1029/2025ef007162",
+      "title": "Recent Tropical Cyclone Outer Size Increases in the Western North Atlantic",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 18,
+      "doi": "10.1029/2025ef006883",
+      "title": "A Greening Future Elevates Flash Drought Risk in Northern Mid-to-High Latitudes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 19,
+      "doi": "10.1029/2024wr037268",
+      "title": "A scale-adaptive urban hydrologic framework: Incorporating network-level storm drainage pipes representation",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 20,
+      "doi": "10.5194/hess-29-3833-2025",
+      "title": "An efficient hybrid downscaling framework to estimate high-resolution river hydrodynamics",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 21,
+      "doi": "10.1038/s41561-024-01613-z",
+      "title": "Daytime urban heat stress in North America reduced by irrigation",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 23,
+      "doi": "10.1038/s43247-025-02243-y",
+      "title": "Enhanced flood synchrony and downstream severity in the Delaware River under rising temperatures",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 24,
+      "doi": "10.1038/s41597-025-05566-9",
+      "title": "Estimating extreme flood return levels in a U.S. mid-Atlantic estuary using continuous 40-year fluvial-coastal model simulations",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 25,
+      "doi": "10.1029/2024ms004737",
+      "title": "Evaluation of Flow Routing on the Unstructured Voronoi Meshes in Earth System Modeling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 26,
+      "doi": "10.1016/j.mlwa.2025.100707",
+      "title": "Explaining drivers of housing prices with nonlinear hedonic regressions",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 28,
+      "doi": "10.1038/s41612-025-01029-5",
+      "title": "Faster recovery of North Atlantic tropical cyclone-induced cold wakes in recent decades",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 29,
+      "doi": "10.1038/s41597-025-06186-z",
+      "title": "Future North Atlantic tropical cyclone intensities in modified historical environments",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 30,
+      "doi": "10.5194/gmd-18-1307-2025",
+      "title": "High-Resolution Model Intercomparison Project phase 2 (HighResMIP2) towards CMIP7",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 31,
+      "doi": "10.1016/j.ecoinf.2025.102994",
+      "title": "HydroEcoLSTM: A Python package with graphical user interface for hydro-ecological modeling with long short-term memory neural network",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 32,
+      "doi": "10.1016/j.jhydrol.2025.133750",
+      "title": "Improving the prediction of daily reservoir releases over the CONUS using conditioned LSTM",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 33,
+      "doi": "10.1111/gcb.70064",
+      "title": "Interactions Between Climate Mean and Variability Drive Future Agroecosystem Vulnerability",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 35,
+      "doi": "10.2166/hydro.2025.005",
+      "title": "Nonlinear behavior of urban flood peaks in the U.S. Mid-Atlantic region",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 36,
+      "doi": "10.1088/1748-9326/adad85",
+      "title": "Projected increases in tropical cyclone-induced U.S. electric power outage risk",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 37,
+      "doi": "10.1016/b978-0-323-95390-0.00011-x",
+      "title": "Projecting global and regional changes in tropical cyclones and their potential impacts",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 39,
+      "doi": "10.1038/s41558-025-02457-0",
+      "title": "The interplay of future emissions and geophysical uncertainties for projections of sea-level rise",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 40,
+      "doi": "10.5194/essd-17-2147-2025",
+      "title": "U-Surf: a global 1 km spatially continuous urban surface property dataset for kilometer-scale urban-resolving Earth system modeling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 41,
+      "doi": "10.1111/jfr3.70131",
+      "title": "Uncertainty in Household Behavior Drives Large Variation in the Size of the Levee Effect",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 43,
+      "doi": "10.21105/joss.07527",
+      "title": "UNSAFE: An UNcertain Structure And Fragility Ensemble framework for property-level flood risk estimation",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 45,
+      "doi": "10.1029/2023ef004230",
+      "title": "A global increase in nearshore tropical cyclone intensification",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 46,
+      "doi": "10.3389/feart.2024.1421265",
+      "title": "A multiple-algorithm approach for modeling coastal wetland eco-geomorphology",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 47,
+      "doi": "10.1038/s41597-024-02952-7",
+      "title": "A North Atlantic synthetic tropical cyclone track, intensity, and rainfall dataset",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 48,
+      "doi": "10.1029/2023ef003868",
+      "title": "Amplified extreme floods and shifting flood mechanisms in the Delaware river basin in future climates",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 49,
+      "doi": "10.1038/s43247-024-01887-6",
+      "title": "Amplified Threat Of Tropical Cyclones To Us Offshore Wind Energy In A Changing Climate",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 50,
+      "doi": "10.1038/s41467-024-45286-z",
+      "title": "Climate change will reduce North American inland wetland areas and disrupt their seasonal regimes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 51,
+      "doi": "10.5194/gmd-17-1197-2024",
+      "title": "Disentangling the hydrological and hydraulic controls on streamflow variability in Energy Exascale Earth System Model (E3SM) V2 - a case study in the Pantanal region",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 52,
+      "doi": "10.5194/nhess-24-2461-2024",
+      "title": "Estuarine hurricane wind can intensify surge-dominated extreme water level in shallow and converging coastal systems",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 53,
+      "doi": "10.1061/jhyeff.heeng-6163",
+      "title": "Generalized Relationship Linking Water Balance and Vegetation Productivity across Site-to-Regional Scales",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 54,
+      "doi": "10.5194/essd-16-2007-2024",
+      "title": "Global 1-km land surface parameters for kilometer-scale Earth system modeling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 55,
+      "doi": "10.1007/978-3-031-89692-7_15",
+      "title": "Graph Neural Differential Equations for Coarse-Grained Socioeconomic Dynamics",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 56,
+      "doi": "10.1029/2024ef004479",
+      "title": "Impacts of sea-level rise on coastal groundwater table simulated by an Earth system model with a land-ocean coupling scheme",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 57,
+      "doi": "10.1038/s41467-024-54946-z",
+      "title": "Intensification of future subsurface marine heatwaves in an eddy-resolving model",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 58,
+      "doi": "10.1038/s41467-024-52241-5",
+      "title": "Large disagreements in estimates of urban land across scales and their implications",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 59,
+      "doi": "10.1016/j.jcp.2024.113511",
+      "title": "Local time-stepping for the shallow water equations using CFL optimized forward-backward Runge-Kutta schemes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 60,
+      "doi": "10.1029/2024gl110087",
+      "title": "Observed increase in tropical cyclone-induced sea surface cooling near the U.S",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 61,
+      "doi": "10.1029/2023ms003845",
+      "title": "On the sensitivity of coastal hypoxia to its external physical forcings",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 63,
+      "doi": "10.1029/2023ms004054",
+      "title": "Simulation of compound flooding using river-ocean two-way coupled E3SM ensemble on variable-resolution meshes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 65,
+      "doi": "10.1038/s41467-023-41732-6",
+      "title": "A cleaner snow future mitigates Northern Hemisphere snowpack loss from warming",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 66,
+      "doi": "10.1007/s11069-023-06100-z",
+      "title": "A new method for predicting hurricane rapid intensification based on co-occurring environmental parameters",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 67,
+      "doi": "10.1007/s10584-023-03495-3",
+      "title": "Amplified drought trends in Nepal increase the potential for Himalayan wildfires",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 68,
+      "doi": "10.5194/gmd-16-1297-2023",
+      "title": "Barotropic tides in MPAS-Ocean (E3SM V2): impact of ice shelf cavities, Geoscientific Model Development, 16, 1297-1314. https://doi.org/10.5194/gmd-16-1297-2023",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 69,
+      "doi": "10.1175/mwr-d-23-0113.1",
+      "title": "CFL optimized forward-backward Runge-Kutta schemes for the shallow-water equations",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 70,
+      "doi": "10.1029/2023ef003539",
+      "title": "Climate change signal in Atlantic tropical cyclones today and near future",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 71,
+      "doi": "10.1016/j.uclim.2023.101615",
+      "title": "Comparing land surface temperature and mean radiant temperature for urban heat mapping in Philadelphia",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 72,
+      "doi": "10.1029/2022ef003211",
+      "title": "Connecting large-scale meteorological patterns to extratropical cyclones in CMIP6 climate models using self-organizing maps",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 73,
+      "doi": "10.1016/j.envsoft.2023.105630",
+      "title": "Extremely rapid, Lagrangian modeling of 2D flooding: a rivulet-based approach",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 74,
+      "doi": "10.1126/sciadv.adf0259",
+      "title": "Increased U.S. coastal hurricane risk under climate change",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 75,
+      "doi": "10.1175/waf-d-22-0100.1",
+      "title": "Inland flooding and rainfall from Hurricane Irene and Tropical Storm Lee (2011): coupled atmosphere-wave-ocean model simulations and remote sensing and in-situ observations with a machine learning tool",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 76,
+      "doi": "10.1175/waf-d-22-0191.1",
+      "title": "Intensification of Hurricane Sally (2020) over the Mississippi River Plume",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 77,
+      "doi": "10.1029/2022ef002947",
+      "title": "Interacting effects of watershed and coastal processes on the evolution of compound flooding during Hurricane Irene",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 78,
+      "doi": "10.1029/2022jd038107",
+      "title": "Modulation of tropical cyclone tracks and rainfall by the North Atlantic Oscillation",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 79,
+      "doi": "10.1029/2022wr033168",
+      "title": "Physics-informed neural networks of the Saint-Venant equations for downscaling a large-scale river model",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 80,
+      "doi": "10.1029/2022jd037494",
+      "title": "Potential weakening of the June 2012 North American derecho under future warming conditions",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 81,
+      "doi": "10.21105/joss.05446",
+      "title": "Pyflowline: A mesh-independent river network generator for hydrologic models",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 83,
+      "doi": "10.1038/s41558-023-01880-5",
+      "title": "Reply to: Limitations of reanalyses for detecting tropical cyclone trends",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 84,
+      "doi": "10.1016/j.oneear.2023.05.016",
+      "title": "Residential segregation and outdoor urban moist heat stress disparities in the United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 85,
+      "doi": "10.1016/j.ocemod.2023.102160",
+      "title": "Scalable self-attraction and loading calculations for unstructured ocean models",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 86,
+      "doi": "10.5194/hess-27-1909-2023",
+      "title": "Sensitivity of the pseudo-global warming method under flood conditions: A case study from the Northeastern United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 87,
+      "doi": "10.1029/2022ms003327",
+      "title": "Storm surge modeling as an application of local time-stepping in MPAS-Ocean",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 88,
+      "doi": "10.1175/jcli-d-22-0842.1",
+      "title": "Stronger tropical cyclone-induced ocean cooling in near-coastal regions compared to the open ocean",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 89,
+      "doi": "10.1016/j.compenvurbsys.2023.101979",
+      "title": "Structural model choices regularly overshadow parametric uncertainty in agent-based simulations of household flood risk outcomes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 90,
+      "doi": "10.1016/j.crm.2023.100516",
+      "title": "The hazard components of representative key risks: the physical climate perspective",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 91,
+      "doi": "10.1029/2022ms003358",
+      "title": "The June 2012 North American derecho: A testbed for evaluating regional and global climate modeling systems at cloud-resolving scales",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 92,
+      "doi": "10.1029/2022ms003089",
+      "title": "Topological relationship-based flow direction modeling: Mesh-independent river networks representation",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 93,
+      "doi": "10.1029/2022ms003487",
+      "title": "Topological relationship-based flow direction modeling: Stream burning and depression filling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 94,
+      "doi": "10.1175/jhm-d-22-0199.1",
+      "title": "Tropical cyclone rainfall climatology, extremes, and flooding potential from remote sensing and reanalysis datasets over the continental United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 95,
+      "doi": "10.1175/mwr-d-23-0141.1",
+      "title": "Two large-scale meteorological patterns are associated with short-duration dry spells in the northeastern United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 96,
+      "doi": "10.5194/hess-27-3911-2023",
+      "title": "Understanding the compound flood risk along the coast of the contiguous United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        },
+        {
+          "fiscalYear": "FY24",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2024 Annual Report; Appendix A, PDF pp. 39–44."
+        }
+      ]
+    },
+    {
+      "recordNumber": 97,
+      "doi": "10.1117/1.jrs.16.044528",
+      "title": "(2022): Geographically aware estimates of remotely sensed water properties for Chesapeake Bay",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 98,
+      "doi": "10.1111/1752-1688.12983",
+      "title": "A Novel Framework for Parametric Analysis of Coastal Transition Zone Modeling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY20",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2020 Annual Report; Body, PDF p. 8."
+        },
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 99,
+      "doi": "10.1016/j.advwatres.2021.104099",
+      "title": "Advances in hexagon mesh-based flow direction modeling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 100,
+      "doi": "10.5194/hess-26-4279-2022",
+      "title": "An algorithm for deriving the topology of belowground urban stormwater networks",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 101,
+      "doi": "10.1007/s00382-022-06289-y",
+      "title": "Assessing the large-scale drivers of precipitation in the northeastern United States via linear orthogonal decomposition",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 102,
+      "doi": "10.1038/s41467-019-09729-2",
+      "title": "Attributing extreme weather: the new science of extreme event attribution",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 103,
+      "doi": "10.1038/s41467-022-29379-1",
+      "title": "Attribution of 2020 hurricane season extreme rainfall to human-induced climate change",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 104,
+      "doi": "10.1175/jcli-d-21-0810.1",
+      "title": "Changing trends in drought patterns over the northeastern United States using multiple large ensemble datasets",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 105,
+      "doi": "10.1007/s11069-022-05694-0",
+      "title": "Compound effects of rain, storm surge, and river discharge on coastal flooding during Hurricane Irene and Tropical Storm Lee (2011) in the Mid-Atlantic region: coupled atmosphere-wave-ocean model simulation and observations",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 106,
+      "doi": "10.1038/s41558-022-01388-4",
+      "title": "Declining tropical cyclone frequency under global warming",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 107,
+      "doi": "10.1029/2021ms002772",
+      "title": "Development of land-river two-way hydrologic coupling for floodplain inundation in the Energy Exascale Earth System Model",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 109,
+      "doi": "10.3390/cli10090130",
+      "title": "Evaluating the Influence of CAM5 Aerosol Configuration on Simulated Tropical Cyclones in the North Atlantic",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 110,
+      "doi": "10.1029/2022ms003207",
+      "title": "Global barotropic tide modeling using inline self-attraction and loading in MPAS-Ocean",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 111,
+      "doi": "10.1029/2021wr030333",
+      "title": "Impact of coastal marsh eco-geomorphologic change on saltwater intrusion under future sea level rise",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 112,
+      "doi": "10.1029/2022gl098187",
+      "title": "Impact of Rainfall on Tropical Cyclone-Induced Sea Surface Cooling",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 113,
+      "doi": "10.1029/2022gl097845",
+      "title": "Impacts of large-scale urbanization and irrigation on summer precipitation in the Mid-Atlantic region of the United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 114,
+      "doi": "10.1029/2022gl099793",
+      "title": "Increasing hurricane intensification rate near the US Atlantic coast",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 115,
+      "doi": "10.5194/hess-26-5473-2022",
+      "title": "Investigating coastal backwater effects and flooding in the coastal zone using a global river transport model on an unstructured mesh",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 116,
+      "doi": "10.1016/j.compenvurbsys.2022.101899",
+      "title": "Landscape metrics regularly outperform other traditionally-used ancillary datasets in dasymetric mapping of population",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 117,
+      "doi": "10.1175/jpo-d-22-0004.1",
+      "title": "Mixing driven by critical reflection of near-inertial waves over the Texas-Louisiana shelf",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 118,
+      "doi": "10.1175/jpo-d-22-0074.1",
+      "title": "Mixing pathways in simple box models",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 119,
+      "doi": "10.1371/journal.pclm.0000013",
+      "title": "Operational extreme weather event attribution can quantify climate change loss and damages",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 120,
+      "doi": "10.1038/s41467-022-33251-7",
+      "title": "Rapid vertical exchange at fronts in the northern Gulf of Mexico",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 121,
+      "doi": "10.1029/2022jd037493",
+      "title": "Roles of external forcing and internal variability in precipitation changes of a sub-region of the U.S. mid-Atlantic during 1979-2019",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 123,
+      "doi": "10.1038/s41467-022-31056-2",
+      "title": "Social inequalities in climate change-attributed impacts of hurricane Harvey",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 124,
+      "doi": "10.5194/gmd-15-5489-2022",
+      "title": "Spatial heterogeneity effects on land surface modeling of water and energy partitioning",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 126,
+      "doi": "10.1029/2022ef003093",
+      "title": "Toward more actionable flood-risk information",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 127,
+      "doi": "10.1029/2021ef002644",
+      "title": "Uncertainty analysis in multi-sector systems: Considerations for risk analysis, projection, and planning for complex systems",
+      "annualReports": [
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 128,
+      "doi": "10.1007/s00376-021-1371-9",
+      "title": "Urbanization impact on regional climate and extreme weather: current understanding, uncertainties, and future research directions",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 129,
+      "doi": "10.5194/gmd-15-5021-2022",
+      "title": "Using a surrogate-assisted Bayesian framework to calibrate the runoff-generation scheme in the Energy Exascale Earth System Model (E3SM) v1",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        },
+        {
+          "fiscalYear": "FY23",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2023 Annual Report; Appendix A, PDF pp. 36–41."
+        }
+      ]
+    },
+    {
+      "recordNumber": 130,
+      "doi": "10.1175/jhm-d-20-0314.1",
+      "title": "A comprehensive intermediate-term drought evaluation system and evaluation of climate data products over the conterminous United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 131,
+      "doi": "10.5194/essd-13-827-2021",
+      "title": "A high-resolution unified observational data product of mesoscale convective systems and isolated deep convection in the United States for 2004-2017",
+      "annualReports": [
+        {
+          "fiscalYear": "FY20",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2020 Annual Report; Body, PDF p. 8."
+        },
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        }
+      ]
+    },
+    {
+      "recordNumber": 132,
+      "doi": "10.1029/2020ef001930",
+      "title": "A retrospective and prospective examination of the 1960s U.S. northeast drought",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 133,
+      "doi": "10.1007/s10584-021-03114-z",
+      "title": "Attributable human-induced changes in the magnitude of flooding in the Houston, Texas region during Hurricane Harvey",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        }
+      ]
+    },
+    {
+      "recordNumber": 134,
+      "doi": "10.3389/fmars.2021.715557",
+      "title": "Characterizing the nonlinear interactions between tide, storm surge, and river flow in the Delaware Bay Estuary, USA",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 135,
+      "doi": "10.1088/1748-9326/ac2d6a",
+      "title": "Climatological analysis of tropical cyclone impacts on hydrological extremes in the Mid-Atlantic region of the United States",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 136,
+      "doi": "10.1175/waf-d-20-0104.1",
+      "title": "Deep learning experiments for tropical cyclone intensity forecasts",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Accepted / In press",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 137,
+      "doi": "10.1038/s41558-021-01127-1",
+      "title": "Extreme sea levels at different global warming levels",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 138,
+      "doi": "10.21105/joss.03175",
+      "title": "HyRiver: hydroclimate data retreiver",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 139,
+      "doi": "10.5194/gmd-14-4261-2021",
+      "title": "Integrating CVMix into GOTM (v6.0): a consistent framework for testing, comparing, and applying ocean mixing schemes",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 140,
+      "doi": "10.1016/j.jcp.2021.110818",
+      "title": "Local time stepping for the shallow water equations in MPAS",
+      "annualReports": [
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 141,
+      "doi": "10.1080/15230406.2021.1991479",
+      "title": "Population downscaling using high-resolution, temporally-rich U.S. property data",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 142,
+      "doi": "10.3390/oceans2040039",
+      "title": "Simulated changes in tropical cyclone size, accumulated cyclone energy and power dissipation index in a warmer climate",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 143,
+      "doi": "10.1029/2021jd035045",
+      "title": "Summer mean and extreme precipitation over the Mid-Atlantic region: Climatological characteristics and contributions from different precipitation types",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Submitted / In review",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        },
+        {
+          "fiscalYear": "FY22",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2022 Annual Report; Appendix A, PDF pp. 35–38."
+        }
+      ]
+    },
+    {
+      "recordNumber": 145,
+      "doi": "10.5065/fp9y-ae42",
+      "title": "Challenges in predicting the coevolution of natural and human systems on coastal regions",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        }
+      ]
+    },
+    {
+      "recordNumber": 146,
+      "doi": "10.1029/2020gl088185",
+      "title": "Spatiotemporal Characteristics and Propagation of Summer Extreme Precipitation Events Over United States: A Complex Network Analysis",
+      "annualReports": [
+        {
+          "fiscalYear": "FY21",
+          "statusAtReport": "Published / Indexed",
+          "notes": "ICoM 2021 Annual Report; Appendix A, PDF pp. 35–36."
+        }
+      ]
+    }
+  ]
+}
