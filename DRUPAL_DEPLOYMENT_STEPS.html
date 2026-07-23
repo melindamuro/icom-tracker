@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ICoM Tracker Drupal Deployment Steps</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 880px; margin: 40px auto; padding: 0 24px; line-height: 1.45; color: #1f2933; }
+    p { margin: 0 0 8px; }
+    p:first-child { font-size: 1.6rem; font-weight: 700; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+<p>ICoM PUBLICATION TRACKER - DRUPAL DEPLOYMENT STEPS</p>
+<br>
+<p>Package: internal full package</p>
+<p>Generated: 2026-07-23</p>
+<br>
+<p>This package contains full tracker data. Put it only behind PNNL-controlled access.</p>
+<br>
+<p>WHY THE OLD LINKS DID NOT WORK</p>
+<br>
+<p>The links in the earlier guide used 127.0.0.1. That address means "this computer." It works only on the computer running the local preview server. Other people cannot open it. Drupal needs to host the static files and provide a real website URL.</p>
+<br>
+<p>RECOMMENDED DRUPAL APPROACH</p>
+<br>
+<p>Ask the PNNL Drupal/web person to host the static export as a small static application and link to it from the ICoM site.</p>
+<br>
+<p>1. Unzip this package.</p>
+<p>2. Create a web-accessible folder in or near the Drupal site, for example:</p>
+<p>   /sites/default/files/icom-publication-tracker/</p>
+<p>   or another static assets folder approved by the PNNL web team.</p>
+<p>3. Upload all unzipped files and folders into that folder. Preserve the folder structure.</p>
+<p>4. Confirm these files are present:</p>
+<p>   - index.html</p>
+<p>   - styles.css</p>
+<p>   - app.js</p>
+<p>   - workbook-records.js</p>
+<p>   - inbox-records.js</p>
+<p>   - drupal-records.js</p>
+<p>   - assets/coastal-modeling-banner.png</p>
+<p>5. Open the hosted index.html URL in a browser.</p>
+<p>6. Add a link on the Drupal Publications page or navigation menu to the hosted tracker URL.</p>
+<br>
+<p>EXAMPLE LINKS AFTER HOSTING</p>
+<br>
+<p>If the folder is hosted at:</p>
+<p>https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/</p>
+<br>
+<p>Then the links would be:</p>
+<p>Public view:</p>
+<p>https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=public</p>
+<br>
+<p>PI view:</p>
+<p>https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=pi</p>
+<br>
+<p>Admin view:</p>
+<p>https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=admin</p>
+<br>
+<p>For the public-safe package, the site will stay in public mode even if someone changes the view parameter.</p>
+<br>
+<p>IF DRUPAL BLOCKS JAVASCRIPT FILES</p>
+<br>
+<p>Some Drupal configurations restrict uploaded HTML or JavaScript. If that happens, ask the web person to host the files in an approved static application directory or webserver folder rather than inside a normal rich-text page body.</p>
+<br>
+<p>DO NOT PASTE THE APP INTO A DRUPAL BODY FIELD</p>
+<br>
+<p>The tracker is a static app made of HTML, CSS, JavaScript, data files, and images. It should be uploaded as files and linked or embedded by URL. Pasting the code into a Drupal WYSIWYG body field will usually break scripts and file paths.</p>
+<br>
+<p>PI PROGRAM-AREA PDF REPORTS</p>
+<br>
+<p>After hosting:</p>
+<p>1. Open the tracker in PI or Admin view.</p>
+<p>2. Go to Reports.</p>
+<p>3. Choose Report program area: RGMA, MSD, ESMD, or CC.</p>
+<p>4. Choose other filters if needed.</p>
+<p>5. Click PDF list.</p>
+<p>6. Share the downloaded PDF with the PI.</p>
+<br>
+<p>SECURITY NOTE</p>
+<br>
+<p>Static hosting does not provide real role-based security. Use the public-safe package for public/external users. Use the internal full package only in an access-controlled location.</p>
+</body>
+</html>

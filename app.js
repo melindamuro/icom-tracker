@@ -15,30 +15,59 @@ const accessRoles = PUBLIC_STATIC_EXPORT
 const visibilityStates = ["Public", "Project team", "Admin only"];
 
 const statuses = [
-  { value: "Writing", color: "#007c83" },
-  { value: "Internal review", color: "#b0831f" },
-  { value: "Submitted", color: "#c85543" },
-  { value: "Under journal review", color: "#b8652b" },
-  { value: "Revision requested", color: "#8f5a20" },
-  { value: "Accepted", color: "#2f7c55" },
-  { value: "In press", color: "#008a6b" },
-  { value: "Online first", color: "#0c7c99" },
-  { value: "Published", color: "#365f91" },
-  { value: "Indexed", color: "#17212b" },
+  { value: "Drafting", color: "#007c83" },
+  { value: "Submitted / In review", color: "#b8652b" },
+  { value: "Accepted / In press", color: "#2f7c55" },
+  { value: "Published / Indexed", color: "#365f91" },
 ];
 
 const lifecycleStages = [
-  "Writing",
-  "Internal review",
-  "Submitted",
-  "Under journal review",
-  "Revision requested",
-  "Accepted",
-  "In press",
-  "Online first",
-  "Published",
-  "Indexed",
+  "Drafting",
+  "Submitted / In review",
+  "Accepted / In press",
+  "Published / Indexed",
 ];
+
+const unpublishedLifecycleStages = [
+  "Drafting",
+  "Submitted / In review",
+  "Accepted / In press",
+];
+
+const annualReportStatusOptions = [
+  "Submitted / In review",
+  "Accepted / In press",
+  "Published / Indexed",
+];
+
+const lifecycleStatusAliases = new Map([
+  ["idea", "Drafting"],
+  ["draft", "Drafting"],
+  ["drafting", "Drafting"],
+  ["writing", "Drafting"],
+  ["internal review", "Drafting"],
+  ["in progress", "Drafting"],
+  ["submitted", "Submitted / In review"],
+  ["submitted / in review", "Submitted / In review"],
+  ["submitted/in review", "Submitted / In review"],
+  ["under journal review", "Submitted / In review"],
+  ["journal review", "Submitted / In review"],
+  ["in review", "Submitted / In review"],
+  ["revision requested", "Submitted / In review"],
+  ["revise and resubmit", "Submitted / In review"],
+  ["revision", "Submitted / In review"],
+  ["accepted", "Accepted / In press"],
+  ["accepted / in press", "Accepted / In press"],
+  ["accepted/in press", "Accepted / In press"],
+  ["in press", "Accepted / In press"],
+  ["online first", "Accepted / In press"],
+  ["online first / in press", "Accepted / In press"],
+  ["online first/in press", "Accepted / In press"],
+  ["published", "Published / Indexed"],
+  ["indexed", "Published / Indexed"],
+  ["published / indexed", "Published / Indexed"],
+  ["published/indexed", "Published / Indexed"],
+]);
 
 const verificationStates = [
   { value: "Stale source", color: "#c85543" },
@@ -89,10 +118,15 @@ const KNOWN_CORRECTION_FIELDS = [
   "lead",
   "authors",
   "venue",
+  "publicationRole",
+  "topic",
+  "topics",
+  "programAreas",
   "accepted",
   "onlineFirst",
   "published",
   "indexed",
+  "annualReports",
   "verified",
   "verifiedBy",
   "doi",
@@ -120,12 +154,16 @@ const SOURCE_ENRICHMENT_FIELDS = [
   "authors",
   "venue",
   "type",
+  "publicationRole",
   "topic",
+  "topics",
+  "programAreas",
   "submitted",
   "accepted",
   "onlineFirst",
   "published",
   "indexed",
+  "annualReports",
   "verified",
   "verifiedBy",
   "doi",
@@ -140,7 +178,6 @@ const SOURCE_ENRICHMENT_FIELDS = [
   "acknowledgementStatus",
   "acknowledgementText",
   "action",
-  "programAreas",
   "excludeFromReports",
   "exclusionReason",
   "sourceRecord",
@@ -152,6 +189,7 @@ const SOURCE_ENRICHMENT_FIELDS = [
 ];
 
 const topics = [
+  "Unassigned / Needs topic review",
   "Coastal flooding",
   "Climate extremes",
   "Human mobility",
@@ -432,6 +470,8 @@ const els = {
   readinessStatus: document.querySelector("#readinessStatus"),
   readinessSummary: document.querySelector("#readinessSummary"),
   readinessChecklist: document.querySelector("#readinessChecklist"),
+  annualReportsList: document.querySelector("#annualReportsList"),
+  addAnnualReportButton: document.querySelector("#addAnnualReportButton"),
   fields: {
     id: document.querySelector("#recordId"),
     title: document.querySelector("#titleField"),
@@ -446,6 +486,7 @@ const els = {
     publicationRole: document.querySelector("#publicationRoleField"),
     programAreas: document.querySelector("#programAreasField"),
     topic: document.querySelector("#topicField"),
+    annualReports: document.querySelector("#annualReportsField"),
     due: document.querySelector("#dueField"),
     submitted: document.querySelector("#submittedField"),
     accepted: document.querySelector("#acceptedField"),
@@ -480,7 +521,7 @@ function initialise() {
   hydrateOptionObjects(els.accessRoleSelect, accessRoles);
   els.accessRoleSelect.value = initialAccessRole();
   hydrateSelect(els.statusFilter, ["All statuses", ...statuses.map((item) => item.value)]);
-  hydrateSelect(els.topicFilter, ["All topics", ...topics]);
+  hydrateSelect(els.topicFilter, ["All topics", ...topicVocabulary()]);
   hydrateSelect(els.programAreaFilter, ["All program areas", ...programAreaFilterValues]);
   hydrateSelect(els.reportProgramAreaSelect, ["All program areas", ...programAreaFilterValues]);
   hydrateSelect(els.publicationRoleFilter, ["All roles", ...publicationRoleOptions]);
@@ -490,7 +531,7 @@ function initialise() {
   hydrateSelect(els.fields.visibility, visibilityStates);
   hydrateSelect(els.fields.type, publicationTypes);
   hydrateSelect(els.fields.publicationRole, publicationRoleOptions);
-  hydrateSelect(els.fields.topic, topics);
+  hydrateSelect(els.fields.topic, topicVocabulary());
 
   bindEvents();
   render();
@@ -504,8 +545,14 @@ function bindEvents() {
     render();
   });
 
-  [els.searchInput, els.statusFilter, els.topicFilter, els.programAreaFilter, els.publicationRoleFilter, els.yearFilter, els.fiscalYearFilter, els.sortSelect, els.reportProgramAreaSelect, els.reportPublicationRoleSelect, els.reportGroupSelect, els.reportFocusSelect].forEach((el) => {
-    el.addEventListener("input", render);
+  els.searchInput.addEventListener("input", render);
+  [els.statusFilter, els.topicFilter, els.programAreaFilter, els.publicationRoleFilter, els.yearFilter, els.fiscalYearFilter, els.sortSelect].forEach((el) => {
+    el.addEventListener("change", render);
+  });
+  [els.reportProgramAreaSelect, els.reportPublicationRoleSelect, els.reportGroupSelect, els.reportFocusSelect].forEach((el) => {
+    el.addEventListener("change", () => {
+      safeRenderSection("Reports", els.reportMount, () => renderReport(getFilteredRecords()));
+    });
   });
 
   els.resetFiltersButton.addEventListener("click", resetFilters);
@@ -550,6 +597,18 @@ function bindEvents() {
     });
   });
   els.pdfDropZone.addEventListener("drop", (event) => handlePdfFiles(event.dataTransfer.files));
+  els.addAnnualReportButton.addEventListener("click", () => {
+    addAnnualReportRow();
+    updateFormGuidance();
+  });
+  els.annualReportsList.addEventListener("click", (event) => {
+    const removeButton = event.target.closest("[data-remove-annual-report]");
+    if (!removeButton) return;
+    removeButton.closest(".annual-report-row")?.remove();
+    updateFormGuidance();
+  });
+  els.annualReportsList.addEventListener("input", updateFormGuidance);
+  els.annualReportsList.addEventListener("change", updateFormGuidance);
 
   document.querySelectorAll(".tab").forEach((button) => {
     button.addEventListener("click", () => {
@@ -897,6 +956,7 @@ function getFilteredRecords() {
       record.venue,
       record.type,
       record.topic,
+      formatTopics(record),
       record.status,
       record.verification,
       record.source,
@@ -916,6 +976,7 @@ function getFilteredRecords() {
       formatFiscalYear(fiscalYearForRecord(record)),
       formatProgramAreas(record),
       publicationRole(record),
+      annualReportSummary(record),
       record.workbookId,
       record.programAreas,
       record.metadataStatus,
@@ -927,8 +988,8 @@ function getFilteredRecords() {
     ].join(" "));
     return (
       (!query || haystack.includes(query)) &&
-      (!status || record.status === status) &&
-      (!topic || record.topic === topic) &&
+      (!status || lifecycleStage(record) === status) &&
+      (!topic || topicLabels(record).includes(topic)) &&
       (!programArea || programAreaLabels(record).includes(programArea)) &&
       (!publicationRoleValue || publicationRole(record) === publicationRoleValue) &&
       (!year || String(record.year) === year) &&
@@ -942,6 +1003,8 @@ function getFilteredRecords() {
 function sortRecords(list, sortMode) {
   return [...list].sort((a, b) => {
     if (sortMode === "year-desc") return Number(b.year) - Number(a.year) || a.title.localeCompare(b.title);
+    if (sortMode === "publication-date-desc") return dateSortValue(b.published) - dateSortValue(a.published) || Number(b.year) - Number(a.year) || a.title.localeCompare(b.title);
+    if (sortMode === "publication-date-asc") return dateSortValue(a.published) - dateSortValue(b.published) || Number(b.year) - Number(a.year) || a.title.localeCompare(b.title);
     if (sortMode === "due-asc") return dueRank(a) - dueRank(b) || Number(b.year) - Number(a.year);
     if (sortMode === "program-asc") return programSortValue(a).localeCompare(programSortValue(b)) || Number(b.year) - Number(a.year) || a.title.localeCompare(b.title);
     if (sortMode === "role-asc") return publicationRole(a).localeCompare(publicationRole(b)) || Number(b.year) - Number(a.year) || a.title.localeCompare(b.title);
@@ -952,6 +1015,11 @@ function sortRecords(list, sortMode) {
 
 function dueRank(record) {
   return record.due ? new Date(record.due).getTime() : Number.MAX_SAFE_INTEGER;
+}
+
+function dateSortValue(value) {
+  const date = isoDate(value);
+  return date ? new Date(date).getTime() : 0;
 }
 
 function roleVisibleRecords(list) {
@@ -971,7 +1039,7 @@ function isPublicFacingRecord(record) {
   return (
     record.visibility === "Public" &&
     !record.excludeFromReports &&
-    ["Published", "Indexed", "Online first"].includes(lifecycle) &&
+    lifecycle === "Published / Indexed" &&
     Boolean(publicationHref(record))
   );
 }
@@ -991,10 +1059,10 @@ function recordReadiness(record) {
   }
 
   const lifecycle = lifecycleStage(record);
-  const finalLike = ["Published", "Indexed", "Online first"].includes(lifecycle);
-  const inPipeline = ["Accepted", "In press", "Online first"].includes(lifecycle);
+  const finalLike = lifecycle === "Published / Indexed";
+  const inPipeline = lifecycle === "Accepted / In press";
   const activeManuscript = isManuscriptPipelineRecord(record) && !finalLike;
-  const submittedForReview = ["Submitted", "Under journal review", "Revision requested"].includes(lifecycle);
+  const submittedForReview = lifecycle === "Submitted / In review";
   const doiOptional = isDoiOptional(record);
   const checks = [
     { label: "Final title entered", ok: Boolean(record.title) },
@@ -1003,11 +1071,12 @@ function recordReadiness(record) {
     { label: activeManuscript ? "Target journal or venue entered" : "Journal or venue entered", ok: Boolean(record.venue) },
     { label: "Program area assigned", ok: programAreaLabels(record).some((label) => label !== "Unassigned") },
     { label: "Primary/secondary role assigned", ok: publicationRole(record) !== "Unassigned" },
+    { label: "Topic assigned", ok: topicLabels(record).some((label) => label !== "Unassigned / Needs topic review") },
     { label: "Acknowledgement checked for ICoM primary support", ok: acknowledgementReview(record).ok },
     { label: "Lifecycle status is current", ok: lifecycleStages.includes(lifecycle) },
     { label: "Submitted date entered for journal-review records", ok: !submittedForReview || Boolean(record.submitted) },
     { label: "Accepted date entered for accepted/in-press records", ok: !inPipeline || Boolean(record.accepted || record.onlineFirst || record.published) },
-    { label: "Published date entered for published/indexed records", ok: !["Published", "Indexed"].includes(lifecycle) || Boolean(record.published || record.indexed) },
+    { label: "Publication date entered for Published/Indexed records", ok: !finalLike || Boolean(record.published) },
     { label: "DOI entered", ok: activeManuscript || doiOptional || Boolean(cleanDoi(record.doi)) },
     { label: "Publisher article or DOI link available", ok: activeManuscript || Boolean(publicationHref(record)) },
     { label: doiOptional ? "Publisher PDF link entered or exception noted" : "Publisher PDF link entered", ok: !finalLike || doiOptional || Boolean(ensureHttpUrl(record.pdfUrl)) },
@@ -1030,35 +1099,99 @@ function recordReadiness(record) {
   };
 }
 
+function readinessStatusText(readiness) {
+  if (readiness.status === "Needs work") {
+    return `Needs work: ${readiness.issues.length} reason${readiness.issues.length === 1 ? "" : "s"}`;
+  }
+  return readiness.status;
+}
+
+function readinessReasonsText(record) {
+  const readiness = recordReadiness(record);
+  return readiness.issues.length ? readiness.issues.join("; ") : "";
+}
+
 function isDoiOptional(record) {
   const text = normalise([record.type, record.venue, record.title, record.notes].join(" "));
   return /book chapter|fact sheet|brief|report|newsletter|commentary/.test(text) && Boolean(ensureHttpUrl(record.url));
 }
 
+function isMissingDoi(record) {
+  return !cleanDoi(record.doi) && !isDoiOptional(record);
+}
+
+function uniqueRecords(list) {
+  const seen = new Set();
+  return (list || []).filter((record) => {
+    const key = record.id ? `id:${record.id}` : recordKey(record);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function emptyLifecycleCounts() {
+  return Object.fromEntries(lifecycleStages.map((stage) => [stage, 0]));
+}
+
+function emptyRoleCounts() {
+  return {
+    primary: 0,
+    secondary: 0,
+    unassignedRole: 0,
+  };
+}
+
+function publicationCounts(list) {
+  const unique = uniqueRecords(list);
+  const lifecycle = emptyLifecycleCounts();
+  const roles = emptyRoleCounts();
+  const readiness = unique.map(recordReadiness);
+
+  unique.forEach((record) => {
+    const stage = lifecycleStage(record);
+    lifecycle[stage] = (lifecycle[stage] || 0) + 1;
+    const role = publicationRole(record);
+    if (role === "Primary") roles.primary += 1;
+    else if (role === "Secondary") roles.secondary += 1;
+    else roles.unassignedRole += 1;
+  });
+
+  return {
+    total: unique.length,
+    lifecycle,
+    unpublishedPipeline: unpublishedLifecycleStages.reduce((sum, stage) => sum + (lifecycle[stage] || 0), 0),
+    ...roles,
+    needsVerification: unique.filter((record) => ["Stale source", "Needs verification", "Candidate"].includes(record.verification)).length,
+    missingDoi: unique.filter(isMissingDoi).length,
+    missingPublicationDate: unique.filter((record) => lifecycleStage(record) === "Published / Indexed" && !record.published).length,
+    reportReady: readiness.filter((item) => item.ready).length,
+    needsWork: readiness.filter((item) => !item.ready && !item.pending && !item.excluded).length,
+    excluded: unique.filter((record) => record.excludeFromReports).length,
+  };
+}
+
 function renderMetrics(list) {
-  const published = list.filter((record) => ["Published", "Indexed"].includes(record.status)).length;
-  const readiness = list.map(recordReadiness);
-  const reportReady = readiness.filter((item) => item.ready).length;
-  const needsWork = readiness.filter((item) => !item.ready && !item.pending && !item.excluded).length;
-  const manuscriptPipeline = list.filter(isManuscriptPipelineRecord).length;
+  const counts = publicationCounts(list);
 
   const metrics = [
-    ["Total", list.length],
-    ["Published / indexed", published],
-    ["Report ready", reportReady],
-    [manuscriptPipeline ? "Manuscript pipeline" : "Needs work", manuscriptPipeline || needsWork],
+    ["Total", counts.total],
+    ["Published / Indexed", counts.lifecycle["Published / Indexed"]],
+    ["Unpublished pipeline", counts.unpublishedPipeline, "Drafting + Submitted / In review + Accepted / In press"],
+    ["Report ready", counts.reportReady],
   ];
 
   els.metricGrid.innerHTML = metrics
-    .map(([label, value]) => `<div class="metric"><strong>${value}</strong><span>${escapeHtml(label)}</span></div>`)
+    .map(([label, value, help]) => `<div class="metric" ${help ? `title="${escapeAttribute(help)}"` : ""}><strong>${value}</strong><span>${escapeHtml(label)}</span>${help ? `<small>${escapeHtml(help)}</small>` : ""}</div>`)
     .join("");
 }
 
 function renderPipeline(list) {
-  const max = Math.max(1, ...statuses.map((status) => list.filter((record) => record.status === status.value).length));
+  const counts = publicationCounts(list);
+  const max = Math.max(1, ...statuses.map((status) => counts.lifecycle[status.value] || 0));
   els.pipeline.innerHTML = statuses
     .map((status) => {
-      const count = list.filter((record) => record.status === status.value).length;
+      const count = counts.lifecycle[status.value] || 0;
       const width = Math.round((count / max) * 100);
       return `
         <div class="pipeline-row">
@@ -1074,8 +1207,11 @@ function renderPipeline(list) {
 }
 
 function renderTopics(list) {
+  const allTopics = new Set(topics);
+  list.flatMap(topicLabels).forEach((topic) => allTopics.add(topic));
   const counts = topics
-    .map((topic) => [topic, list.filter((record) => record.topic === topic).length])
+    .concat([...allTopics].filter((topic) => !topics.includes(topic)).sort())
+    .map((topic) => [topic, uniqueRecords(list).filter((record) => topicLabels(record).includes(topic)).length])
     .filter(([, count]) => count > 0)
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
@@ -1179,7 +1315,7 @@ function renderCard(record) {
         <div class="record-meta">
           <span class="status-badge">${escapeHtml(record.status)}</span>
           ${publicMode ? "" : `<span class="verification-badge" style="--verify:${verification.color}">${escapeHtml(record.verification)}</span>`}
-          ${publicMode ? "" : `<span class="readiness-badge ${readinessClass(readiness)}">${escapeHtml(readiness.status)}</span>`}
+          ${publicMode ? "" : `<span class="readiness-badge ${readinessClass(readiness)}" title="${escapeAttribute(readiness.issues.join("; "))}">${escapeHtml(readinessStatusText(readiness))}</span>`}
           <span class="year-badge">${escapeHtml(String(record.year))}</span>
           <span class="year-badge">${escapeHtml(formatFiscalYear(fiscalYearForRecord(record)))}</span>
           <span class="type-badge">${escapeHtml(record.type || "Publication")}</span>
@@ -1190,16 +1326,18 @@ function renderCard(record) {
         <span><b>Lead:</b> ${escapeHtml(record.lead || "Unassigned")}</span>
         ${record.authors?.length ? `<span><b>Authors:</b> ${escapeHtml(formatAuthors(record.authors))}</span>` : ""}
         <span><b>Journal:</b> ${escapeHtml(record.venue || "TBD")}</span>
-        <span><b>Topic:</b> ${escapeHtml(record.topic || "Unmapped")}</span>
+        <span><b>Topic:</b> ${escapeHtml(formatTopics(record))}</span>
         <span><b>Publication role:</b> ${escapeHtml(publicationRole(record))}</span>
         ${!publicMode ? `<span><b>Acknowledgement:</b> ${escapeHtml(acknowledgementReview(record).status)}</span>` : ""}
         <span><b>Lifecycle:</b> ${escapeHtml(lifecycleStage(record))}</span>
+        <span><b>Publication date:</b> ${escapeHtml(record.published ? formatDate(record.published) : lifecycleStage(record) === "Published / Indexed" ? "Missing" : "Not yet published")}</span>
         ${record.doi ? `<span><b>DOI:</b> ${renderInlineLink(record.doi, doiLink)}</span>` : ""}
         ${publicationLink ? `<span><b>Publisher link:</b> ${renderInlineLink(linkHost(publicationLink), publicationLink)}</span>` : ""}
         ${record.ostiId ? `<span><b>OSTI:</b> ${renderInlineLink(record.ostiId, record.ostiUrl)}</span>` : ""}
         ${formatProgramAreas(record) !== "Unassigned" ? `<span><b>Program area:</b> ${escapeHtml(formatProgramAreas(record))}</span>` : ""}
         ${!publicMode && record.visibility ? `<span><b>Visibility:</b> ${escapeHtml(record.visibility)}</span>` : ""}
         ${!publicMode && record.authorAudit ? `<span><b>Author check:</b> ${escapeHtml(record.authorAudit)}</span>` : ""}
+        ${!publicMode && annualReportSummary(record) ? `<span><b>Annual reports:</b> ${escapeHtml(annualReportSummary(record))}</span>` : ""}
         ${!publicMode && (record.verified || record.verifiedBy) ? `<span><b>Reviewed:</b> ${record.verified ? formatDate(record.verified) : "Date missing"}${record.verifiedBy ? ` by ${escapeHtml(record.verifiedBy)}` : ""}</span>` : ""}
         ${!publicMode && record.excludeFromReports ? `<span><b>Report exclusion:</b> ${escapeHtml(record.exclusionReason || "Excluded from formal reports")}</span>` : ""}
         ${!publicMode && record.linkStatus ? `<span><b>Link check:</b> ${escapeHtml(record.linkStatus)}${record.linkChecked ? ` (${formatDate(record.linkChecked)})` : ""}</span>` : ""}
@@ -1239,7 +1377,7 @@ function renderReadinessIssues(issues) {
   `;
 }
 
-function renderTable(list) {
+function renderTableDirectRowsDeprecated(list) {
   const publicMode = isPublicRole();
   const editable = canEditRecords();
   els.recordsMount.innerHTML = `
@@ -1247,23 +1385,26 @@ function renderTable(list) {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>FY</th>
-            <th>Status</th>
-            ${publicMode ? "" : "<th>Verification</th>"}
-            ${publicMode ? "" : "<th>Report readiness</th>"}
-            <th>DOI</th>
-            <th>Publisher link</th>
-            ${publicMode ? "" : "<th>Link check</th>"}
-            <th>Lifecycle</th>
-            <th>Lead</th>
-            <th>Authors</th>
-            ${publicMode ? "" : "<th>Author check</th>"}
-            <th>Topic</th>
-            <th>Program area</th>
-            <th>Role</th>
-            ${editable ? "<th></th>" : ""}
+            <th class="col-title">Title</th>
+            <th class="col-year">Year</th>
+            <th class="col-fy">FY</th>
+            <th class="col-status">Status</th>
+            <th class="col-date">Publication date</th>
+            ${publicMode ? "" : "<th class=\"col-verification\">Verification</th>"}
+            ${publicMode ? "" : "<th class=\"col-readiness\">Report readiness</th>"}
+            ${publicMode ? "" : "<th class=\"col-reasons\">Needs work reasons</th>"}
+            <th class="col-doi">DOI</th>
+            <th class="col-link">Publisher link</th>
+            ${publicMode ? "" : "<th class=\"col-link-check\">Link check</th>"}
+            <th class="col-lifecycle">Lifecycle</th>
+            <th class="col-lead">Lead</th>
+            <th class="col-authors">Authors</th>
+            ${publicMode ? "" : "<th class=\"col-author-check\">Author check</th>"}
+            <th class="col-topic">Topic</th>
+            <th class="col-program">Program area</th>
+            <th class="col-role">Role</th>
+            ${publicMode ? "" : "<th class=\"col-annual\">Annual reports</th>"}
+            ${editable ? "<th class=\"col-actions\"></th>" : ""}
           </tr>
         </thead>
         <tbody>
@@ -1307,23 +1448,26 @@ function renderTable(list) {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>FY</th>
-            <th>Status</th>
-            ${publicMode ? "" : "<th>Verification</th>"}
-            ${publicMode ? "" : "<th>Report readiness</th>"}
-            <th>DOI</th>
-            <th>Publisher link</th>
-            ${publicMode ? "" : "<th>Link check</th>"}
-            <th>Lifecycle</th>
-            <th>Lead</th>
-            <th>Authors</th>
-            ${publicMode ? "" : "<th>Author check</th>"}
-            <th>Topic</th>
-            <th>Program area</th>
-            <th>Role</th>
-            ${editable ? "<th></th>" : ""}
+            <th class="col-title">Title</th>
+            <th class="col-year">Year</th>
+            <th class="col-fy">FY</th>
+            <th class="col-status">Status</th>
+            <th class="col-date">Publication date</th>
+            ${publicMode ? "" : "<th class=\"col-verification\">Verification</th>"}
+            ${publicMode ? "" : "<th class=\"col-readiness\">Report readiness</th>"}
+            ${publicMode ? "" : "<th class=\"col-reasons\">Needs work reasons</th>"}
+            <th class="col-doi">DOI</th>
+            <th class="col-link">Publisher link</th>
+            ${publicMode ? "" : "<th class=\"col-link-check\">Link check</th>"}
+            <th class="col-lifecycle">Lifecycle</th>
+            <th class="col-lead">Lead</th>
+            <th class="col-authors">Authors</th>
+            ${publicMode ? "" : "<th class=\"col-author-check\">Author check</th>"}
+            <th class="col-topic">Topic</th>
+            <th class="col-program">Program area</th>
+            <th class="col-role">Role</th>
+            ${publicMode ? "" : "<th class=\"col-annual\">Annual reports</th>"}
+            ${editable ? "<th class=\"col-actions\"></th>" : ""}
           </tr>
         </thead>
         <tbody>
@@ -1342,7 +1486,7 @@ function safeRenderTableRow(record) {
     console.error("Record table row render failed", { id: record?.id, title: record?.title, error });
     return `
       <tr class="render-error-row">
-        <td colspan="18">
+        <td colspan="24">
           <strong>${escapeHtml(record?.title || "Untitled record")}</strong>
           <span>${escapeHtml(errorMessage(error))}</span>
           ${canEditRecords() ? `<button class="mini-button" data-edit="${escapeAttribute(record?.id || "")}" title="Edit record" aria-label="Edit record">Edit</button>` : ""}
@@ -1355,25 +1499,30 @@ function safeRenderTableRow(record) {
 function renderTableRow(record) {
   const publicMode = isPublicRole();
   const editable = canEditRecords();
+  const readiness = recordReadiness(record);
+  const publishedMissing = lifecycleStage(record) === "Published / Indexed" && !record.published;
   return `
     <tr>
-      <td>${escapeHtml(record.title)}</td>
-      <td>${escapeHtml(String(record.year))}</td>
-      <td>${escapeHtml(formatFiscalYear(fiscalYearForRecord(record)))}</td>
-      <td>${escapeHtml(record.status)}</td>
-      ${publicMode ? "" : `<td>${escapeHtml(record.verification || "")}</td>`}
-      ${publicMode ? "" : `<td>${escapeHtml(recordReadiness(record).status)}</td>`}
-      <td>${renderInlineLink(record.doi || "", doiHref(record))}</td>
-      <td>${renderInlineLink(publicationHref(record) ? linkHost(publicationHref(record)) : "", publicationHref(record))}</td>
-      ${publicMode ? "" : `<td>${escapeHtml(record.linkStatus || "")}</td>`}
-      <td>${escapeHtml(lifecycleStage(record))}</td>
-      <td>${escapeHtml(record.lead || "")}</td>
-      <td>${escapeHtml(formatAuthors(record.authors))}</td>
-      ${publicMode ? "" : `<td>${escapeHtml(record.authorAudit || "")}</td>`}
-      <td>${escapeHtml(record.topic || "")}</td>
-      <td>${escapeHtml(formatProgramAreas(record))}</td>
-      <td>${escapeHtml(publicationRole(record))}</td>
-      ${editable ? `<td><button class="mini-button" data-edit="${escapeAttribute(record.id)}" title="Edit record" aria-label="Edit record">Edit</button></td>` : ""}
+      <td class="col-title">${escapeHtml(record.title)}</td>
+      <td class="col-year">${escapeHtml(String(record.year))}</td>
+      <td class="col-fy">${escapeHtml(formatFiscalYear(fiscalYearForRecord(record)))}</td>
+      <td class="col-status">${escapeHtml(record.status)}</td>
+      <td class="col-date ${publishedMissing ? "is-missing" : ""}">${escapeHtml(record.published ? formatDate(record.published) : publishedMissing ? "Missing" : "")}</td>
+      ${publicMode ? "" : `<td class="col-verification">${escapeHtml(record.verification || "")}</td>`}
+      ${publicMode ? "" : `<td class="col-readiness"><span title="${escapeAttribute(readiness.issues.join("; "))}">${escapeHtml(readinessStatusText(readiness))}</span></td>`}
+      ${publicMode ? "" : `<td class="col-reasons">${escapeHtml(readinessReasonsText(record) || "OK")}</td>`}
+      <td class="col-doi">${renderInlineLink(record.doi || "", doiHref(record))}</td>
+      <td class="col-link">${renderInlineLink(publicationHref(record) ? linkHost(publicationHref(record)) : "", publicationHref(record))}</td>
+      ${publicMode ? "" : `<td class="col-link-check">${escapeHtml(record.linkStatus || "")}</td>`}
+      <td class="col-lifecycle">${escapeHtml(lifecycleStage(record))}</td>
+      <td class="col-lead">${escapeHtml(record.lead || "")}</td>
+      <td class="col-authors">${escapeHtml(formatAuthors(record.authors))}</td>
+      ${publicMode ? "" : `<td class="col-author-check">${escapeHtml(record.authorAudit || "")}</td>`}
+      <td class="col-topic">${escapeHtml(formatTopics(record))}</td>
+      <td class="col-program">${escapeHtml(formatProgramAreas(record))}</td>
+      <td class="col-role">${escapeHtml(publicationRole(record))}</td>
+      ${publicMode ? "" : `<td class="col-annual">${escapeHtml(annualReportSummary(record) || "")}</td>`}
+      ${editable ? `<td class="col-actions"><button class="mini-button" data-edit="${escapeAttribute(record.id)}" title="Edit record" aria-label="Edit record">Edit</button></td>` : ""}
     </tr>
   `;
 }
@@ -1482,7 +1631,7 @@ async function checkRecordLinks(record) {
   const issues = [];
   const checks = [];
   const doi = cleanDoi(record.doi);
-  const finalLike = ["Published", "Indexed", "Online first"].includes(lifecycleStage(record));
+  const finalLike = lifecycleStage(record) === "Published / Indexed";
 
   if (doi) {
     const doiResult = await verifyDoiMetadata(doi);
@@ -1629,7 +1778,7 @@ async function lookupCrossrefRecord(record) {
     authors: authors.length ? authors : record.authors,
     published: record.published || publicationDate,
     accepted: record.accepted || acceptedDate,
-    status: ["Writing", "Internal review", "Submitted", "Under journal review", "Revision requested"].includes(record.status) && publicationDate ? "Published" : record.status,
+    status: isManuscriptPipelineRecord(record) && publicationDate ? "Published / Indexed" : record.status,
     verification: "Verified current",
     verified: dateSlug(),
     verifiedBy: record.verifiedBy || REVIEWER_NAME,
@@ -1676,7 +1825,7 @@ async function lookupOstiRecord(record) {
     authors: authors.length ? authors : record.authors,
     type: record.type || item.product_type,
     published: record.published || publicationDate,
-    status: ["Writing", "Internal review", "Submitted", "Under journal review", "Revision requested"].includes(record.status) && publicationDate ? "Published" : record.status,
+    status: isManuscriptPipelineRecord(record) && publicationDate ? "Published / Indexed" : record.status,
     verification: "Verified current",
     verified: dateSlug(),
     verifiedBy: record.verifiedBy || REVIEWER_NAME,
@@ -1880,7 +2029,9 @@ function renderReport(list) {
             ${stageColumns.map((column) => `<th>${escapeHtml(column.label)}</th>`).join("")}
             <th>Needs verification</th>
             <th>Missing DOI</th>
+            <th>Missing publication date</th>
             <th>Ready</th>
+            <th>Needs work</th>
             <th>Excluded</th>
           </tr>
         </thead>
@@ -1902,7 +2053,9 @@ function renderReport(list) {
                 ${stageColumns.map((column) => `<td>${row[column.key]}</td>`).join("")}
                 <td>${row.needsVerification}</td>
                 <td>${row.missingDoi}</td>
+                <td>${row.missingPublicationDate}</td>
                 <td>${row.reportReady}</td>
+                <td>${row.needsWork}</td>
                 <td>${row.excluded}</td>
               </tr>
             `
@@ -1934,7 +2087,7 @@ function getReportRecords(list) {
     });
   }
   if (focus === "missingDoi") {
-    return scoped.filter((record) => !record.doi);
+    return scoped.filter(isMissingDoi);
   }
   if (focus === "authorAudit") {
     return scoped.filter((record) => needsAuthorReview(record));
@@ -1960,29 +2113,33 @@ function buildReportRows(list) {
   });
 
   return [...buckets.entries()]
-    .map(([label, groupRecords]) => ({
-      label,
-      count: groupRecords.length,
-      ...reportRoleCounts(groupRecords),
-      ...reportStageCounts(groupRecords),
-      needsVerification: groupRecords.filter((record) => ["Stale source", "Needs verification", "Candidate"].includes(record.verification)).length,
-      missingDoi: groupRecords.filter((record) => !record.doi).length,
-      reportReady: groupRecords.filter((record) => recordReadiness(record).ready).length,
-      excluded: groupRecords.filter((record) => record.excludeFromReports).length,
-    }))
+    .map(([label, groupRecords]) => {
+      const counts = publicationCounts(groupRecords);
+      return {
+        label,
+        count: counts.total,
+        primary: counts.primary,
+        secondary: counts.secondary,
+        unassignedRole: counts.unassignedRole,
+        ...reportStageCounts(groupRecords),
+        needsVerification: counts.needsVerification,
+        missingDoi: counts.missingDoi,
+        missingPublicationDate: counts.missingPublicationDate,
+        reportReady: counts.reportReady,
+        needsWork: counts.needsWork,
+        excluded: counts.excluded,
+      };
+    })
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 }
 
 function reportStageColumns() {
   return [
-    { key: "published", label: "Published / indexed" },
+    { key: "published", label: "Published / Indexed" },
     { key: "pipelineTotal", label: "Unpublished pipeline" },
-    { key: "onlineInPress", label: "Online first / in press" },
-    { key: "accepted", label: "Accepted" },
-    { key: "revision", label: "Revision" },
-    { key: "journalReview", label: "Journal review" },
-    { key: "submitted", label: "Submitted" },
-    { key: "writingInternal", label: "Writing / internal" },
+    { key: "drafting", label: "Drafting" },
+    { key: "submittedInReview", label: "Submitted / In review" },
+    { key: "acceptedInPress", label: "Accepted / In press" },
   ];
 }
 
@@ -1995,37 +2152,21 @@ function reportRoleCounts(groupRecords) {
 }
 
 function reportStageCounts(groupRecords) {
-  const counts = {
-    published: 0,
-    pipelineTotal: 0,
-    onlineInPress: 0,
-    accepted: 0,
-    revision: 0,
-    journalReview: 0,
-    submitted: 0,
-    writingInternal: 0,
+  const counts = publicationCounts(groupRecords);
+  return {
+    published: counts.lifecycle["Published / Indexed"] || 0,
+    pipelineTotal: counts.unpublishedPipeline,
+    drafting: counts.lifecycle.Drafting || 0,
+    submittedInReview: counts.lifecycle["Submitted / In review"] || 0,
+    acceptedInPress: counts.lifecycle["Accepted / In press"] || 0,
   };
-  groupRecords.forEach((record) => {
-    const stage = lifecycleStage(record);
-    if (["Published", "Indexed"].includes(stage)) {
-      counts.published += 1;
-      return;
-    }
-    if (["Online first", "In press"].includes(stage)) counts.onlineInPress += 1;
-    else if (stage === "Accepted") counts.accepted += 1;
-    else if (stage === "Revision requested") counts.revision += 1;
-    else if (stage === "Under journal review") counts.journalReview += 1;
-    else if (stage === "Submitted") counts.submitted += 1;
-    else if (["Writing", "Internal review"].includes(stage)) counts.writingInternal += 1;
-    counts.pipelineTotal += 1;
-  });
-  return counts;
 }
 
 function groupValues(record, group) {
   if (group === "programAreas") return programAreaLabels(record);
   if (group === "publicationRole") return [publicationRole(record)];
   if (group === "lifecycle") return [lifecycleStage(record)];
+  if (group === "topic") return topicLabels(record);
   if (group === "year") return [String(record.year || "Unknown")];
   if (group === "fiscalYear") return [formatFiscalYear(fiscalYearForRecord(record))];
   return splitMultiValue(record[group]);
@@ -2037,6 +2178,120 @@ function splitMultiValue(value) {
     .map((item) => item.trim())
     .filter(Boolean);
   return values.length ? values : ["Unassigned"];
+}
+
+function topicLabels(record) {
+  return normaliseTopics(record.topics || record.topic);
+}
+
+function topicVocabulary() {
+  const preserved = records
+    .flatMap((record) => {
+      if (Array.isArray(record.topics)) return record.topics;
+      return String(record.topic || "").split(/[;,|]/);
+    })
+    .map((topic) => fixText(topic || "").trim())
+    .filter(Boolean);
+  const vocabulary = [...new Set([...topics, ...preserved])];
+  return [
+    "Unassigned / Needs topic review",
+    ...vocabulary
+      .filter((topic) => topic !== "Unassigned / Needs topic review")
+      .sort((a, b) => a.localeCompare(b)),
+  ];
+}
+
+function selectedTopics() {
+  const selected = [...els.fields.topic.selectedOptions].map((option) => option.value).filter(Boolean);
+  return normaliseTopics(selected);
+}
+
+function setTopicSelection(record) {
+  const selected = new Set(topicLabels(record));
+  [...els.fields.topic.options].forEach((option) => {
+    option.selected = selected.has(option.value);
+  });
+  if (![...els.fields.topic.options].some((option) => option.selected)) {
+    els.fields.topic.value = "Unassigned / Needs topic review";
+  }
+}
+
+function normaliseTopics(value) {
+  const raw = Array.isArray(value)
+    ? value
+    : String(value || "").split(/[;,|]/);
+  const cleaned = raw
+    .map((item) => fixText(item || "").trim())
+    .filter(Boolean)
+    .map((item) => {
+      const known = topics.find((topic) => normalise(topic) === normalise(item));
+      return known || item;
+    });
+  const unique = [...new Set(cleaned)];
+  return unique.length ? unique : ["Unassigned / Needs topic review"];
+}
+
+function formatTopics(record) {
+  return topicLabels(record).join(", ");
+}
+
+function needsTopicReview(item, resolvedTopics = normaliseTopics(item?.topics || item?.topic)) {
+  if (resolvedTopics.includes("Unassigned / Needs topic review")) return true;
+  if (resolvedTopics.some((topic) => !topics.includes(topic))) return true;
+  const sourceText = normalise([
+    item?.source,
+    item?.metadataStatus,
+    item?.notes,
+    ...(Array.isArray(item?.tags) ? item.tags : String(item?.tags || "").split(/[;,]/)),
+  ].join(" "));
+  return resolvedTopics.includes("Model integration") && /pdf intake|pdf upload|inferred|keyword|manual entry/.test(sourceText);
+}
+
+function normaliseAnnualReports(value) {
+  const rows = Array.isArray(value) ? value : [];
+  return rows
+    .map((row) => ({
+      fiscalYear: normaliseFiscalYearLabel(row?.fiscalYear),
+      statusAtReport: normaliseAnnualReportStatus(row?.statusAtReport || row?.status),
+      notes: fixText(row?.notes || ""),
+    }))
+    .filter((row) => row.fiscalYear || row.statusAtReport || row.notes);
+}
+
+function normaliseFiscalYearLabel(value) {
+  const text = String(value || "").trim().toUpperCase();
+  if (!text) return "";
+  const year = text.match(/\d{2,4}/)?.[0] || "";
+  if (!year) return text;
+  return `FY${year.length === 2 ? year : year.slice(-2)}`;
+}
+
+function normaliseAnnualReportStatus(value) {
+  const status = normaliseStatus(value);
+  return annualReportStatusOptions.includes(status) ? status : "Submitted / In review";
+}
+
+function annualReportSummary(record) {
+  const rows = normaliseAnnualReports(record.annualReports);
+  if (!rows.length) return "";
+  return rows
+    .map((row) => `${row.fiscalYear || "FY?"}-${shortAnnualReportStatus(row.statusAtReport)}`)
+    .join("; ");
+}
+
+function formatAnnualReports(record) {
+  const rows = normaliseAnnualReports(record.annualReports);
+  return rows
+    .map((row) => [row.fiscalYear, row.statusAtReport, row.notes].filter(Boolean).join(": "))
+    .join(" | ");
+}
+
+function shortAnnualReportStatus(status) {
+  return {
+    "Submitted / In review": "Submitted",
+    "Accepted / In press": "Accepted",
+    "Published / Indexed": "Published",
+  }[status] || status || "Status?";
 }
 
 function programAreaLabels(record) {
@@ -2087,14 +2342,19 @@ function programSortValue(record) {
 }
 
 function publicationRole(record) {
-  const acknowledgement = acknowledgementReview(record);
-  return acknowledgement.primarySupported ? "Primary" : normalisePublicationRole(record.publicationRole || inferPublicationRole(record));
+  const explicit = normalisePublicationRole(record.publicationRole);
+  return explicit !== "Unassigned" ? explicit : inferPublicationRole(record);
 }
 
 function inferPublicationRole(record) {
-  const text = [record.publicationRole, ...(record.tags || [])].join(" | ");
-  if (/\bsecondary\b/i.test(text)) return "Secondary";
-  if (/\bprimary\b/i.test(text)) return "Primary";
+  const tags = Array.isArray(record.tags)
+    ? record.tags
+    : String(record.tags || "").split(/[;,]/).map((tag) => tag.trim()).filter(Boolean);
+  for (const tag of tags) {
+    const text = String(tag || "").trim();
+    if (/^(publication\s+role:\s*)?primary(:\s*yes)?$/i.test(text)) return "Primary";
+    if (/^(publication\s+role:\s*)?secondary(:\s*yes)?$/i.test(text)) return "Secondary";
+  }
   return "Unassigned";
 }
 
@@ -2107,8 +2367,8 @@ function normalisePublicationRole(value) {
 
 function tagsWithPublicationRole(tags, role) {
   const nextRole = normalisePublicationRole(role);
-  const cleaned = (tags || []).filter((tag) => !/^(primary|secondary)(:\s*yes)?$/i.test(String(tag).trim()));
-  return nextRole === "Unassigned" ? cleaned : [...cleaned, nextRole];
+  const cleaned = (tags || []).filter((tag) => !/^(publication\s+role:\s*)?(primary|secondary)(:\s*yes)?$/i.test(String(tag).trim()));
+  return nextRole === "Unassigned" ? cleaned : [...cleaned, `Publication role: ${nextRole}`];
 }
 
 function acknowledgementReview(record) {
@@ -2130,7 +2390,7 @@ function acknowledgementReview(record) {
 }
 
 function publicationRoleAssignedWithoutAck(record) {
-  const role = normalisePublicationRole(record.publicationRole || inferPublicationRole(record));
+  const role = publicationRole(record);
   const tags = Array.isArray(record.tags) ? record.tags : String(record.tags || "").split(/[;,]/).map((tag) => tag.trim()).filter(Boolean);
   return role !== "Unassigned" && !/pdf upload|pdf intake/i.test([record.source, ...tags].join(" "));
 }
@@ -2181,6 +2441,7 @@ function reportLabel(group) {
   return {
     programAreas: "Program area",
     publicationRole: "Publication role",
+    topic: "Topic",
     lead: "Lead author",
     venue: "Journal",
     lifecycle: "Lifecycle stage",
@@ -2197,7 +2458,7 @@ function reportLabel(group) {
 function reportFocusLabel(focus) {
   return {
     all: "All records matching the current filters",
-    journalPipeline: "Writing, internal-review, submitted, journal-review, revision, accepted, in-press, and online-first records",
+    journalPipeline: "Unpublished pipeline: Drafting + Submitted / In review + Accepted / In press",
     needsVerification: "Records that need source or metadata verification",
     reportReady: "Records that pass the report-ready checklist",
     notReportReady: "Records with missing report-ready checklist items",
@@ -2235,13 +2496,15 @@ function downloadReportCsv(rows) {
     ...stageColumns.map((column) => column.key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)),
     "needs_verification",
     "missing_doi",
+    "missing_publication_date",
     "report_ready",
+    "needs_work",
     "excluded",
   ];
   const lines = [
     columns.join(","),
     ...rows.map((row) =>
-      [row.label, row.count, row.primary, row.secondary, row.unassignedRole, ...stageColumns.map((column) => row[column.key]), row.needsVerification, row.missingDoi, row.reportReady, row.excluded]
+      [row.label, row.count, row.primary, row.secondary, row.unassignedRole, ...stageColumns.map((column) => row[column.key]), row.needsVerification, row.missingDoi, row.missingPublicationDate, row.reportReady, row.needsWork, row.excluded]
         .map((value) => `"${String(value).replaceAll('"', '""')}"`)
         .join(",")
     ),
@@ -2252,24 +2515,41 @@ function downloadReportCsv(rows) {
 function downloadReportExcel(rows) {
   const title = reportTitleText();
   const stageColumns = reportStageColumns();
+  const scopedRecords = uniqueRecords(getReportRecords(getFilteredRecords()));
   const xmlRows = [
     ["Report", title],
     ["Generated", new Date().toLocaleString()],
     ["Scope", reportScopeLabel()],
     ["Focus", reportFocusLabel(els.reportFocusSelect.value)],
     [],
-    ["Group", "Records", "Primary", "Secondary", "Unassigned role", ...stageColumns.map((column) => column.label), "Needs verification", "Missing DOI", "Report ready", "Excluded"],
-    ...rows.map((row) => [row.label, row.count, row.primary, row.secondary, row.unassignedRole, ...stageColumns.map((column) => row[column.key]), row.needsVerification, row.missingDoi, row.reportReady, row.excluded]),
+    ["Group", "Records", "Primary", "Secondary", "Unassigned role", ...stageColumns.map((column) => column.label), "Needs verification", "Missing DOI", "Missing publication date", "Report ready", "Needs work", "Excluded"],
+    ...rows.map((row) => [row.label, row.count, row.primary, row.secondary, row.unassignedRole, ...stageColumns.map((column) => row[column.key]), row.needsVerification, row.missingDoi, row.missingPublicationDate, row.reportReady, row.needsWork, row.excluded]),
   ];
-  const xml = `<?xml version="1.0"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:x="urn:schemas-microsoft-com:office:excel"
- xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
-  <Worksheet ss:Name="ICoM Report">
+  const publicationRows = [
+    ["Record ID", "Title", "Authors", "Journal", "Program area", "Publication role", "Topics", "Lifecycle", "Publication date", "DOI", "Annual-report history", "Report readiness", "Needs work reasons"],
+    ...scopedRecords.map((record) => {
+      const readiness = recordReadiness(record);
+      return [
+        record.id,
+        record.title,
+        formatAuthors(record.authors),
+        record.venue,
+        formatProgramAreas(record),
+        publicationRole(record),
+        formatTopics(record),
+        lifecycleStage(record),
+        record.published || "",
+        cleanDoi(record.doi),
+        formatAnnualReports(record),
+        readinessStatusText(readiness),
+        readiness.issues.join("; "),
+      ];
+    }),
+  ];
+  const worksheetXml = (name, worksheetRows) => `
+  <Worksheet ss:Name="${excelXmlEscape(name)}">
     <Table>
-      ${xmlRows
+      ${worksheetRows
         .map(
           (row) => `<Row>${row
             .map((cell) => {
@@ -2280,7 +2560,15 @@ function downloadReportExcel(rows) {
         )
         .join("")}
     </Table>
-  </Worksheet>
+  </Worksheet>`;
+  const xml = `<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  ${worksheetXml("ICoM Report", xmlRows)}
+  ${worksheetXml("Publications", publicationRows)}
 </Workbook>`;
   downloadFile(`icom-report${reportFileScopeSlug()}-${els.reportGroupSelect.value}-${dateSlug()}.xls`, xml, "application/vnd.ms-excel");
 }
@@ -2368,12 +2656,28 @@ function buildPublicationListPdf(list) {
 
   list.forEach((record, index) => {
     const titleLines = wrapPdfText(`${index + 1}. ${record.title || "Untitled publication"}`, 92).slice(0, 4);
+    const readiness = recordReadiness(record);
+    const publicationDateText = record.published
+      ? formatDate(record.published)
+      : lifecycleStage(record) === "Published / Indexed"
+        ? "Missing publication date"
+        : "Not yet published";
+    const annualReportLines = normaliseAnnualReports(record.annualReports)
+      .flatMap((row) => wrapPdfText(`Annual report ${row.fiscalYear || "FY?"}: ${row.statusAtReport}${row.notes ? `; ${row.notes}` : ""}`, 116));
+    const readinessLines = readiness.issues.length
+      ? wrapPdfText(`Needs work: ${readiness.issues.join("; ")}`, 116)
+      : [];
+    const detailLines = [
+      `Publication date: ${publicationDateText}`,
+      `Topic: ${formatTopics(record)}`,
+    ].flatMap((line) => wrapPdfText(line, 116))
+      .concat(annualReportLines, readinessLines);
     const linkLines = [
       cleanDoi(record.doi) ? "doi" : "",
       publicationHref(record) ? "publication" : "",
       record.ostiUrl ? "osti" : "",
     ].filter(Boolean).length;
-    const blockHeight = titleLines.length * 12 + 27 + linkLines * 12;
+    const blockHeight = titleLines.length * 12 + detailLines.length * 10 + 39 + linkLines * 12;
 
     if (y - blockHeight < 62) {
       finishPage();
@@ -2395,6 +2699,11 @@ function buildPublicationListPdf(list) {
     ].join(" | ");
     addText(60, y, truncate(meta, 118), 8);
     y -= 12;
+
+    detailLines.forEach((line) => {
+      addText(60, y, truncate(line, 124), 8);
+      y -= 10;
+    });
 
     const doi = cleanDoi(record.doi);
     if (doi) {
@@ -2439,18 +2748,18 @@ function buildPublicationListPdf(list) {
 function buildPdfReport(rows) {
   const columns = [
     ["Group", 48],
-    ["Records", 205],
-    ["Pri", 245],
-    ["Sec", 275],
-    ["Un", 305],
-    ["Pub", 335],
-    ["Pipe", 365],
-    ["Online", 397],
-    ["Acc", 435],
-    ["Rev", 463],
-    ["Review", 491],
-    ["Sub", 531],
-    ["Write", 560],
+    ["Rec", 205],
+    ["Pri", 232],
+    ["Sec", 258],
+    ["Un", 284],
+    ["Pub", 315],
+    ["Pipe", 344],
+    ["Draft", 378],
+    ["Review", 415],
+    ["Press", 462],
+    ["No DOI", 505],
+    ["No date", 538],
+    ["Work", 575],
   ];
   const rowHeight = 15;
   const firstY = 690;
@@ -2485,19 +2794,19 @@ function buildPdfReport(rows) {
     pageRows.forEach((row, rowIndex) => {
       const y = firstY - rowIndex * rowHeight;
       const values = [
-        truncate(row.label, 38),
+        truncate(row.label, 34),
         row.count,
         row.primary,
         row.secondary,
         row.unassignedRole,
         row.published,
         row.pipelineTotal,
-        row.onlineInPress,
-        row.accepted,
-        row.revision,
-        row.journalReview,
-        row.submitted,
-        row.writingInternal,
+        row.drafting,
+        row.submittedInReview,
+        row.acceptedInPress,
+        row.missingDoi,
+        row.missingPublicationDate,
+        row.needsWork,
       ];
       columns.forEach(([, x], colIndex) => addText(x, y, values[colIndex], 8));
     });
@@ -2548,20 +2857,15 @@ function truncate(value, limit) {
 }
 
 function lifecycleStage(record) {
-  if (record.indexed || record.status === "Indexed") return "Indexed";
-  if (record.published || record.status === "Published") return "Published";
-  if (record.onlineFirst || record.status === "Online first") return "Online first";
-  if (record.status === "In press") return "In press";
-  if (record.accepted || record.status === "Accepted") return "Accepted";
-  if (record.status === "Revision requested") return "Revision requested";
-  if (record.status === "Under journal review") return "Under journal review";
-  if (record.submitted || record.status === "Submitted") return "Submitted";
-  if (record.status === "Internal review") return "Internal review";
-  return "Writing";
+  const status = normaliseStatus(record.status);
+  if (status === "Published / Indexed" || record.published || record.indexed) return "Published / Indexed";
+  if (status === "Accepted / In press" || record.onlineFirst || record.accepted) return "Accepted / In press";
+  if (status === "Submitted / In review" || record.submitted) return "Submitted / In review";
+  return "Drafting";
 }
 
 function isManuscriptPipelineRecord(record) {
-  return ["Writing", "Internal review", "Submitted", "Under journal review", "Revision requested", "Accepted", "In press", "Online first"].includes(lifecycleStage(record));
+  return unpublishedLifecycleStages.includes(lifecycleStage(record));
 }
 
 function fiscalYearForRecord(record) {
@@ -2571,7 +2875,7 @@ function fiscalYearForRecord(record) {
 }
 
 function primaryFiscalDate(record) {
-  return [record.published, record.onlineFirst, record.accepted, record.submitted, record.indexed, record.due]
+  return [record.published, record.onlineFirst, record.accepted, record.submitted, record.due]
     .map(isoDate)
     .find(Boolean) || (record.year ? `${record.year}-01-01` : "");
 }
@@ -2654,7 +2958,7 @@ function renderIntakeDrafts() {
           <h4>${escapeHtml(draft.title || "Untitled PDF")}</h4>
           <dl>
             <dt>File</dt><dd>${escapeHtml(draft.fileName || "PDF")}</dd>
-            <dt>Status</dt><dd>${escapeHtml(draft.status || "Writing")}</dd>
+            <dt>Status</dt><dd>${escapeHtml(draft.status || "Drafting")}</dd>
             <dt>Journal</dt><dd>${escapeHtml(draft.venue || "TBD")}</dd>
             <dt>Role</dt><dd>${escapeHtml(publicationRole(draft))}</dd>
             <dt>Acknowledgement</dt><dd>${escapeHtml(acknowledgementReview(draft).status)}</dd>
@@ -2806,7 +3110,7 @@ async function extractPdfDraft(file) {
     source: `PDF upload: ${file.name}`,
     tags: ["PDF intake"],
   });
-  const role = acknowledgement.primarySupported ? "Primary" : "Unassigned";
+  const role = "Unassigned";
   const missing = [
     !title && "title",
     !doi && "DOI",
@@ -2849,8 +3153,8 @@ async function extractPdfDraft(file) {
     acknowledgementStatus: acknowledgement.status,
     acknowledgementText: acknowledgement.excerpt,
     metadataStatus: appendUnique("PDF intake extraction", `Acknowledgement: ${acknowledgement.status}`),
-    reviewFlag: acknowledgement.needsReview ? "Acknowledgement check" : "",
-    notes: `Extracted from PDF intake. ${matchNote}${acknowledgement.primarySupported ? "Acknowledgement states ICoM primary support; role set to Primary. " : ""}${acknowledgement.needsReview ? "Review acknowledgement section for ICoM primary support. " : ""}${missing.length ? `Missing: ${missing.join(", ")}. ` : ""}Text-based extraction may miss scanned or heavily encoded PDFs.`,
+    reviewFlag: acknowledgement.primarySupported ? "Confirm primary publication role" : acknowledgement.needsReview ? "Acknowledgement check" : "",
+    notes: `Extracted from PDF intake. ${matchNote}${acknowledgement.primarySupported ? "Acknowledgement suggests ICoM primary support; confirm the publication role before reporting. " : ""}${acknowledgement.needsReview ? "Review acknowledgement section for ICoM primary support. " : ""}${missing.length ? `Missing: ${missing.join(", ")}. ` : ""}Text-based extraction may miss scanned or heavily encoded PDFs.`,
     fileName: file.name,
   });
 
@@ -2892,14 +3196,14 @@ function makePdfErrorDraft(file, error) {
     id: "",
     title: file.name.replace(/\.pdf$/i, ""),
     year: new Date().getFullYear(),
-    status: "Writing",
+    status: "Drafting",
     verification: "Candidate",
     visibility: "Project team",
     lead: "",
     authors: [],
     venue: "",
     type: "Journal Article",
-    topic: "Model integration",
+    topic: "Unassigned / Needs topic review",
     source: `PDF upload: ${file.name}`,
     publicationRole: "Unassigned",
     tags: ["PDF intake", "Acknowledgement: Needs acknowledgement check"],
@@ -3135,17 +3439,17 @@ function inferPdfStatus({ doi, submitted, accepted, onlineFirst, published, text
   const lower = normalise(text);
   const mentionsAccepted = Boolean(accepted) || /\baccepted\b/.test(lower);
   const mentionsPublished = /\bpublished\b|\bpublication date\b/.test(lower);
-  if (published && !mentionsAccepted) return "Published";
-  if (onlineFirst) return "Online first";
-  if (/in press/.test(lower)) return "In press";
-  if (mentionsAccepted && !mentionsPublished) return "Accepted";
-  if (accepted) return "Accepted";
-  if (published) return "Published";
-  if (/revision requested|revise and resubmit|major revision|minor revision|revisions? requested/.test(lower)) return "Revision requested";
-  if (/under review|peer review/.test(lower)) return "Under journal review";
-  if (submitted) return "Submitted";
-  if (doi) return "Published";
-  return "Writing";
+  if (published && !mentionsAccepted) return "Published / Indexed";
+  if (onlineFirst) return "Accepted / In press";
+  if (/in press/.test(lower)) return "Accepted / In press";
+  if (mentionsAccepted && !mentionsPublished) return "Accepted / In press";
+  if (accepted) return "Accepted / In press";
+  if (published) return "Published / Indexed";
+  if (/revision requested|revise and resubmit|major revision|minor revision|revisions? requested/.test(lower)) return "Submitted / In review";
+  if (/under review|peer review/.test(lower)) return "Submitted / In review";
+  if (submitted) return "Submitted / In review";
+  if (doi) return "Published / Indexed";
+  return "Drafting";
 }
 
 function yearFromDates(values) {
@@ -3166,7 +3470,7 @@ function inferPdfTopic(text) {
   if (/equity|exposure/.test(lower)) return "Equity and exposure";
   if (/power|energy|wind/.test(lower)) return "Energy-water systems";
   if (/precipitation|drought|extreme|climate/.test(lower)) return "Climate extremes";
-  return "Model integration";
+  return "Unassigned / Needs topic review";
 }
 
 async function copyText(text) {
@@ -3197,19 +3501,21 @@ function openRecordDialog(record = null) {
     id: "",
     title: "",
     year: new Date().getFullYear(),
-    status: "Writing",
+    status: "Drafting",
     verification: "Candidate",
     lead: "",
     venue: "",
     type: "Journal article",
     programAreas: "",
-    topic: "Coastal flooding",
+    topic: "Unassigned / Needs topic review",
+    topics: ["Unassigned / Needs topic review"],
     due: "",
     submitted: "",
     accepted: "",
     onlineFirst: "",
     published: "",
     indexed: "",
+    annualReports: [],
     doi: "",
     url: "",
     pdfUrl: "",
@@ -3235,7 +3541,7 @@ function openRecordDialog(record = null) {
   els.fields.type.value = draft.type || publicationTypes[0];
   els.fields.publicationRole.value = publicationRole(draft);
   setProgramAreaSelection(draft);
-  els.fields.topic.value = draft.topic || topics[0];
+  setTopicSelection(draft);
   els.fields.due.value = draft.due || "";
   els.fields.submitted.value = draft.submitted || "";
   els.fields.accepted.value = draft.accepted || "";
@@ -3253,6 +3559,7 @@ function openRecordDialog(record = null) {
   els.fields.notes.value = draft.notes || "";
   els.fields.excludeFromReports.checked = Boolean(draft.excludeFromReports);
   els.fields.exclusionReason.value = draft.exclusionReason || "";
+  renderAnnualReportRows(draft.annualReports || []);
   els.fields.visibility.closest("label").hidden = !canManageAccess();
   els.fields.excludeFromReports.closest("label").hidden = !canManageAccess();
   els.fields.exclusionReason.closest("label").hidden = !canManageAccess();
@@ -3260,6 +3567,49 @@ function openRecordDialog(record = null) {
   updateFormGuidance();
   els.recordDialog.showModal();
   els.fields.title.focus();
+}
+
+function renderAnnualReportRows(reports) {
+  els.annualReportsList.innerHTML = "";
+  normaliseAnnualReports(reports).forEach((report) => addAnnualReportRow(report));
+}
+
+function addAnnualReportRow(report = {}) {
+  const row = document.createElement("div");
+  row.className = "annual-report-row";
+  row.innerHTML = `
+    <label>
+      <span>Fiscal year</span>
+      <input data-annual-report-field="fiscalYear" maxlength="8" placeholder="FY25" value="${escapeAttribute(report.fiscalYear || "")}" />
+    </label>
+    <label>
+      <span>Status at report</span>
+      <select data-annual-report-field="statusAtReport">
+        ${annualReportStatusOptions.map((status) => `<option value="${escapeAttribute(status)}" ${normaliseAnnualReportStatus(report.statusAtReport) === status ? "selected" : ""}>${escapeHtml(status)}</option>`).join("")}
+      </select>
+    </label>
+    <label>
+      <span>Notes</span>
+      <input data-annual-report-field="notes" maxlength="180" value="${escapeAttribute(report.notes || "")}" />
+    </label>
+    <button class="mini-button" type="button" data-remove-annual-report title="Remove annual-report entry" aria-label="Remove annual-report entry">X</button>
+  `;
+  els.annualReportsList.append(row);
+}
+
+function annualReportsFromForm() {
+  return [...els.annualReportsList.querySelectorAll(".annual-report-row")]
+    .map((row) => ({
+      fiscalYear: row.querySelector('[data-annual-report-field="fiscalYear"]')?.value || "",
+      statusAtReport: row.querySelector('[data-annual-report-field="statusAtReport"]')?.value || "",
+      notes: row.querySelector('[data-annual-report-field="notes"]')?.value || "",
+    }))
+    .map((row) => ({
+      fiscalYear: normaliseFiscalYearLabel(row.fiscalYear),
+      statusAtReport: normaliseAnnualReportStatus(row.statusAtReport),
+      notes: row.notes.trim(),
+    }))
+    .filter((row) => row.fiscalYear || row.notes);
 }
 
 function formDuplicateCandidate() {
@@ -3279,6 +3629,7 @@ function updateDuplicateWarning() {
 }
 
 function formRecordDraft() {
+  const formTopics = selectedTopics();
   return normaliseRecord({
     id: els.fields.id.value || "form-draft",
     title: els.fields.title.value.trim(),
@@ -3292,13 +3643,15 @@ function formRecordDraft() {
     type: els.fields.type.value,
     publicationRole: els.fields.publicationRole.value,
     programAreas: selectedProgramAreas(),
-    topic: els.fields.topic.value,
+    topic: formTopics[0],
+    topics: formTopics,
     due: els.fields.due.value,
     submitted: els.fields.submitted.value,
     accepted: els.fields.accepted.value,
     onlineFirst: els.fields.onlineFirst.value,
     published: els.fields.published.value,
     indexed: els.fields.indexed.value,
+    annualReports: annualReportsFromForm(),
     doi: els.fields.doi.value.trim(),
     url: els.fields.url.value.trim(),
     pdfUrl: els.fields.pdfUrl.value.trim(),
@@ -3347,6 +3700,7 @@ function saveRecordFromForm() {
   const id = els.fields.id.value || `record-${crypto.randomUUID()}`;
   const existing = records.find((record) => record.id === id) || {};
   const canAdmin = canManageAccess();
+  const formTopics = selectedTopics();
   const nextRecord = normaliseRecord({
     ...existing,
     id,
@@ -3361,13 +3715,15 @@ function saveRecordFromForm() {
     type: els.fields.type.value,
     publicationRole: els.fields.publicationRole.value,
     programAreas: selectedProgramAreas(),
-    topic: els.fields.topic.value,
+    topic: formTopics[0],
+    topics: formTopics,
     due: els.fields.due.value,
     submitted: els.fields.submitted.value,
     accepted: els.fields.accepted.value,
     onlineFirst: els.fields.onlineFirst.value,
     published: els.fields.published.value,
     indexed: els.fields.indexed.value,
+    annualReports: annualReportsFromForm(),
     doi: els.fields.doi.value.trim().replace(/^https?:\/\/doi.org\//i, ""),
     url: els.fields.url.value.trim(),
     pdfUrl: els.fields.pdfUrl.value.trim(),
@@ -3489,6 +3845,7 @@ function downloadCsv(list) {
     "year",
     "fiscalYear",
     "status",
+    "lifecycle",
     "verification",
     "visibility",
     "lead",
@@ -3498,7 +3855,9 @@ function downloadCsv(list) {
     "publicationRole",
     "acknowledgementStatus",
     "topic",
+    "topics",
     "due",
+    "publicationDate",
     "submitted",
     "accepted",
     "onlineFirst",
@@ -3508,6 +3867,7 @@ function downloadCsv(list) {
     "verifiedBy",
     "reportReadiness",
     "readinessIssues",
+    "annualReports",
     "excludeFromReports",
     "exclusionReason",
     "doi",
@@ -3545,10 +3905,15 @@ function csvCell(value) {
 function columnValue(record, column) {
   if (column === "journal") return record.venue || "";
   if (column === "fiscalYear") return formatFiscalYear(fiscalYearForRecord(record));
+  if (column === "lifecycle") return lifecycleStage(record);
   if (column === "publicationRole") return publicationRole(record);
   if (column === "acknowledgementStatus") return acknowledgementReview(record).status;
-  if (column === "reportReadiness") return recordReadiness(record).status;
+  if (column === "topic") return topicLabels(record)[0] || "";
+  if (column === "topics") return formatTopics(record);
+  if (column === "publicationDate") return record.published || "";
+  if (column === "reportReadiness") return readinessStatusText(recordReadiness(record));
   if (column === "readinessIssues") return recordReadiness(record).issues.join("; ");
+  if (column === "annualReports") return formatAnnualReports(record);
   const value = record[column];
   return Array.isArray(value) ? value.join("; ") : value || "";
 }
@@ -3693,15 +4058,20 @@ function normaliseRecord(item) {
     ? item.tags.map((tag) => String(tag || "").trim()).filter(Boolean)
     : String(item.tags || "").split(/[;,]/).map((tag) => tag.trim()).filter(Boolean);
   const acknowledgement = acknowledgementReview({ ...item, tags: parsedTags });
-  const resolvedPublicationRole = acknowledgement.primarySupported
-    ? "Primary"
-    : normalisePublicationRole(item.publicationRole || inferPublicationRole({ ...item, tags: parsedTags }));
+  const resolvedPublicationRole = publicationRole({ ...item, tags: parsedTags });
   const metadataStatus = acknowledgement.primarySupported
-    ? appendUnique(fixText(item.metadataStatus || ""), "Acknowledgement indicates ICoM primary support")
+    ? appendUnique(fixText(item.metadataStatus || ""), "Acknowledgement suggests ICoM primary support; publication role requires confirmation")
     : fixText(item.metadataStatus || "");
-  const reviewFlag = acknowledgement.needsReview
+  let reviewFlag = acknowledgement.needsReview
     ? appendUnique(item.reviewFlag || "", "Acknowledgement check")
     : item.reviewFlag || "";
+  if (acknowledgement.primarySupported && resolvedPublicationRole !== "Primary") {
+    reviewFlag = appendUnique(reviewFlag, "Confirm primary publication role");
+  }
+  const resolvedTopics = normaliseTopics(item.topics || item.topic);
+  if (needsTopicReview(item, resolvedTopics)) {
+    reviewFlag = appendUnique(reviewFlag, "Topic review");
+  }
 
   return {
     id: item.id || `record-${crypto.randomUUID()}`,
@@ -3719,13 +4089,15 @@ function normaliseRecord(item) {
     venue: fixText(item.venue || item.journal || ""),
     type: publicationTypes.includes(item.type) ? item.type : "Journal article",
     publicationRole: resolvedPublicationRole,
-    topic: topics.includes(item.topic) ? item.topic : "Coastal flooding",
+    topic: resolvedTopics[0] || "Unassigned / Needs topic review",
+    topics: resolvedTopics,
     due: item.due || "",
     submitted: item.submitted || "",
     accepted: item.accepted || "",
     onlineFirst: item.onlineFirst || "",
     published: item.published || item.publicationDate || "",
     indexed: item.indexed || "",
+    annualReports: normaliseAnnualReports(item.annualReports),
     verified: item.verified || "",
     verifiedBy: normaliseReviewerName(item.verifiedBy || ""),
     doi: String(item.doi || "").trim().replace(/^https?:\/\/doi.org\//i, ""),
@@ -3856,7 +4228,7 @@ function shouldPreferSourceValue(field, currentValue, sourceValue, source) {
   if (field === "title" && !/manual entry/i.test(String(source.source || ""))) return String(sourceValue).length > String(currentValue || "").length;
   if (field === "pdfUrl" && /journals\.ametsoc\.org\/downloadpdf\/journals\/.+\.xml$/i.test(String(currentValue || ""))) return true;
   if (field === "verified" || field === "linkChecked" || field === "updated") return String(sourceValue || "") > String(currentValue || "");
-  if (field === "status") return lifecycleStages.indexOf(sourceValue) > lifecycleStages.indexOf(currentValue);
+  if (field === "status") return lifecycleStages.indexOf(normaliseStatus(sourceValue)) > lifecycleStages.indexOf(normaliseStatus(currentValue));
   return false;
 }
 
@@ -3881,11 +4253,11 @@ function findKnownCorrection(id) {
 
 function normaliseStatus(value) {
   const text = String(value || "").trim();
-  if (!text || text === "Idea" || text === "Drafting") return "Writing";
-  if (/^accepted\s*\/\s*in\s*press$/i.test(text)) return "In press";
-  if (/^in\s*progress$/i.test(text)) return "Writing";
-  if (/^revise|revision|revise\s+and\s+resubmit/i.test(text)) return "Revision requested";
-  return statuses.some((status) => status.value === text) ? text : "Writing";
+  if (!text) return "Drafting";
+  const key = normalise(text);
+  if (lifecycleStatusAliases.has(key)) return lifecycleStatusAliases.get(key);
+  if (/^revise|revision|revise\s+and\s+resubmit/i.test(text)) return "Submitted / In review";
+  return statuses.some((status) => status.value === text) ? text : "Drafting";
 }
 
 function normaliseVisibility(value, item = {}) {
@@ -3897,8 +4269,8 @@ function normaliseVisibility(value, item = {}) {
 function inferDefaultVisibility(item = {}) {
   const status = normaliseStatus(item.status);
   const publicLifecycle =
-    Boolean(item.published || item.indexed || item.onlineFirst) ||
-    ["Published", "Indexed", "Online first"].includes(status);
+    Boolean(item.published || item.indexed) ||
+    status === "Published / Indexed";
   return publicLifecycle && !booleanValue(item.excludeFromReports) ? "Public" : "Project team";
 }
 

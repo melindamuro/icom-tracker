@@ -257,7 +257,7 @@ button {
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
   gap: 34px;
   align-items: end;
-  padding: 78px 0 44px;
+  padding: 40px 0 44px;
 }
 
 .date-chip {
@@ -272,9 +272,9 @@ button {
 }
 
 .masthead__content h2 {
-  max-width: 720px;
-  font-size: 5.2rem;
-  line-height: 0.95;
+  max-width: 640px;
+  font-size: 3.65rem;
+  line-height: 1;
 }
 
 .masthead__content h2 span {
@@ -314,6 +314,14 @@ button {
   overflow-wrap: anywhere;
 }
 
+.metric small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
 .workspace {
   width: min(1180px, calc(100% - 32px));
   margin: -18px auto 48px;
@@ -323,7 +331,7 @@ button {
 
 .toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 1.35fr) repeat(7, minmax(108px, 0.72fr)) auto auto;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
   align-items: end;
   padding: 14px;
@@ -331,6 +339,10 @@ button {
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
+}
+
+.toolbar .search-box {
+  grid-column: span 2;
 }
 
 label {
@@ -399,6 +411,16 @@ select {
   padding: 0 11px;
 }
 
+select[multiple] {
+  height: auto;
+  min-height: 132px;
+  padding: 5px;
+}
+
+select[multiple] option {
+  padding: 6px 7px;
+}
+
 textarea {
   padding: 10px 11px;
   resize: vertical;
@@ -433,6 +455,7 @@ button:focus-visible {
 .access-banner {
   display: grid;
   gap: 4px;
+  margin-top: 18px;
   padding: 14px 16px;
   border: 1px solid #bdd9dd;
   border-left: 5px solid var(--teal);
@@ -451,6 +474,50 @@ button:focus-visible {
 
 .access-banner small {
   font-weight: 750;
+}
+
+.definitions-panel {
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.definitions-panel summary {
+  padding: 13px 16px;
+  color: var(--ink);
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.definition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.definition-grid div {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.definition-grid div:nth-child(3n) {
+  border-right: 0;
+}
+
+.definition-grid strong {
+  color: var(--ink);
+  font-size: 0.86rem;
+}
+
+.definition-grid span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 .intake-panel {
@@ -905,18 +972,18 @@ button:focus-visible {
 
 table {
   width: 100%;
-  min-width: 1240px;
+  min-width: 2480px;
   border-collapse: collapse;
   background: #fff;
 }
 
 th,
 td {
-  padding: 12px 10px;
+  padding: 8px 9px;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
 th {
@@ -927,7 +994,75 @@ th {
 }
 
 td {
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+}
+
+.col-title {
+  width: 380px;
+  min-width: 380px;
+}
+
+.col-year,
+.col-fy {
+  width: 62px;
+  min-width: 62px;
+}
+
+.col-status,
+.col-lifecycle,
+.col-verification,
+.col-readiness {
+  width: 145px;
+  min-width: 145px;
+}
+
+.col-date {
+  width: 125px;
+  min-width: 125px;
+}
+
+.col-reasons {
+  width: 280px;
+  min-width: 280px;
+}
+
+.col-doi {
+  width: 230px;
+  min-width: 230px;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.col-link,
+.col-link-check,
+.col-author-check,
+.col-topic,
+.col-annual {
+  width: 190px;
+  min-width: 190px;
+}
+
+.col-lead,
+.col-program,
+.col-role {
+  width: 130px;
+  min-width: 130px;
+}
+
+.col-authors {
+  width: 260px;
+  min-width: 260px;
+}
+
+.col-actions {
+  width: 60px;
+  min-width: 60px;
+}
+
+.is-missing {
+  color: #9a2e21;
+  font-weight: 850;
+  background: #fff4f2;
 }
 
 tr:last-child td {
@@ -1055,6 +1190,40 @@ dialog::backdrop {
   grid-column: 1 / -1;
 }
 
+.annual-report-field {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.annual-report-field legend {
+  padding: 0 5px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.annual-report-list {
+  display: grid;
+  gap: 9px;
+}
+
+.annual-report-row {
+  display: grid;
+  grid-template-columns: 90px minmax(180px, 0.8fr) minmax(220px, 1.2fr) 34px;
+  gap: 9px;
+  align-items: end;
+}
+
+.annual-report-row .mini-button {
+  width: 34px;
+  height: 42px;
+}
+
 .readiness-panel {
   display: grid;
   gap: 8px;
@@ -1159,7 +1328,7 @@ dialog::backdrop {
   }
 
   .masthead__content h2 {
-    font-size: 4rem;
+    font-size: 3.15rem;
   }
 
   .side-rail {
@@ -1168,6 +1337,22 @@ dialog::backdrop {
 
   .toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .toolbar .search-box {
+    grid-column: span 2;
+  }
+
+  .definition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .definition-grid div:nth-child(3n) {
+    border-right: 1px solid var(--line);
+  }
+
+  .definition-grid div:nth-child(2n) {
+    border-right: 0;
   }
 }
 
@@ -1188,8 +1373,14 @@ dialog::backdrop {
 
   .record-grid,
   .record-form,
+  .definition-grid,
+  .annual-report-row,
   .toolbar {
     grid-template-columns: 1fr;
+  }
+
+  .toolbar .search-box {
+    grid-column: auto;
   }
 
   .metric-grid {

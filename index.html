@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ICoM Publication Repository & Manuscript Tracker</title>
-    <link rel="stylesheet" href="./styles.css?v=20260721c" />
+    <link rel="stylesheet" href="./styles.css?v=20260723c" />
   </head>
   <body>
     <div class="app-shell">
@@ -83,6 +83,8 @@
             <select id="sortSelect">
               <option value="updated-desc">Recently updated</option>
               <option value="year-desc">Year, newest</option>
+              <option value="publication-date-desc">Publication date, newest</option>
+              <option value="publication-date-asc">Publication date, oldest</option>
               <option value="due-asc">Next due</option>
               <option value="program-asc">Program area</option>
               <option value="role-asc">Publication role</option>
@@ -94,6 +96,29 @@
         </section>
 
         <section class="access-banner" id="accessBanner" aria-live="polite"></section>
+
+        <section class="definitions-panel" aria-labelledby="fieldDefinitionsTitle">
+          <details>
+            <summary id="fieldDefinitionsTitle">Field definitions / how to read this tracker</summary>
+            <div class="definition-grid">
+              <div><strong>Primary</strong><span>Confirmed ICoM-primary publication. Acknowledgement analysis can suggest this, but a user must confirm the role.</span></div>
+              <div><strong>Secondary</strong><span>Confirmed related publication that is not primarily supported by ICoM.</span></div>
+              <div><strong>Unassigned</strong><span>Role has not been confirmed yet.</span></div>
+              <div><strong>Published / Indexed</strong><span>Final publication or indexing stage. The publication date must come from the Published date field.</span></div>
+              <div><strong>Unpublished pipeline</strong><span>Drafting plus Submitted / In review plus Accepted / In press.</span></div>
+              <div><strong>Verification</strong><span>Source and metadata review state for the record.</span></div>
+              <div><strong>Needs verification</strong><span>Record needs source, metadata, acknowledgement, or link confirmation.</span></div>
+              <div><strong>Report ready</strong><span>Record passes the reporting checklist and is not excluded.</span></div>
+              <div><strong>Needs work</strong><span>One or more report-readiness checks failed; the table and exports list the reasons.</span></div>
+              <div><strong>Missing DOI</strong><span>No DOI is entered, unless the publication type has a documented DOI exception.</span></div>
+              <div><strong>Excluded</strong><span>Admin-selected record that should not appear in formal reporting.</span></div>
+              <div><strong>Program area</strong><span>Project program area assignment: RGMA, MSD, ESMD, CC, or Unassigned.</span></div>
+              <div><strong>Topic</strong><span>Working topical label. Unassigned / Needs topic review means PI confirmation is needed.</span></div>
+              <div><strong>Publication date</strong><span>The actual published date. Indexed date is preserved separately and is not a substitute.</span></div>
+              <div><strong>Annual-report history</strong><span>Fiscal-year snapshots showing how the publication appeared in prior annual reports.</span></div>
+            </div>
+          </details>
+        </section>
 
         <section class="reports-panel" id="reportsPanel" aria-label="Reports">
           <div class="section-heading">
@@ -118,6 +143,7 @@
               <select id="reportGroupSelect">
                 <option value="programAreas">Program area</option>
                 <option value="publicationRole">Publication role</option>
+                <option value="topic">Topic</option>
                 <option value="lead">Lead author</option>
                 <option value="venue">Journal</option>
                 <option value="lifecycle">Lifecycle stage</option>
@@ -292,7 +318,7 @@
         </fieldset>
         <label>
           <span>Topic</span>
-          <select id="topicField"></select>
+          <select id="topicField" multiple size="5"></select>
         </label>
         <label>
           <span>Due date</span>
@@ -311,13 +337,18 @@
           <input id="onlineFirstField" type="date" />
         </label>
         <label>
-          <span>Published</span>
+          <span>Publication date</span>
           <input id="publishedField" type="date" />
         </label>
         <label>
           <span>Indexed</span>
           <input id="indexedField" type="date" />
         </label>
+        <fieldset class="annual-report-field span-2" id="annualReportsField">
+          <legend>Annual-report history</legend>
+          <div class="annual-report-list" id="annualReportsList"></div>
+          <button class="ghost-button" type="button" id="addAnnualReportButton">Add annual-report entry</button>
+        </fieldset>
         <label>
           <span>DOI</span>
           <input id="doiField" maxlength="180" />
@@ -400,6 +431,6 @@
     <script src="./workbook-records.js?v=20260720"></script>
     <script src="./inbox-records.js?v=20260720"></script>
     <script src="./drupal-records.js?v=20260720"></script>
-    <script src="./app.js?v=20260721c"></script>
+    <script src="./app.js?v=20260723c"></script>
   </body>
 </html>

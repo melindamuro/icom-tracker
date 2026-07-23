@@ -1,0 +1,69 @@
+﻿ICoM PUBLICATION TRACKER - DRUPAL DEPLOYMENT STEPS
+
+Package: internal full package
+Generated: 2026-07-23
+
+This package contains full tracker data. Put it only behind PNNL-controlled access.
+
+WHY THE OLD LINKS DID NOT WORK
+
+The links in the earlier guide used 127.0.0.1. That address means "this computer." It works only on the computer running the local preview server. Other people cannot open it. Drupal needs to host the static files and provide a real website URL.
+
+RECOMMENDED DRUPAL APPROACH
+
+Ask the PNNL Drupal/web person to host the static export as a small static application and link to it from the ICoM site.
+
+1. Unzip this package.
+2. Create a web-accessible folder in or near the Drupal site, for example:
+   /sites/default/files/icom-publication-tracker/
+   or another static assets folder approved by the PNNL web team.
+3. Upload all unzipped files and folders into that folder. Preserve the folder structure.
+4. Confirm these files are present:
+   - index.html
+   - styles.css
+   - app.js
+   - workbook-records.js
+   - inbox-records.js
+   - drupal-records.js
+   - assets/coastal-modeling-banner.png
+5. Open the hosted index.html URL in a browser.
+6. Add a link on the Drupal Publications page or navigation menu to the hosted tracker URL.
+
+EXAMPLE LINKS AFTER HOSTING
+
+If the folder is hosted at:
+https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/
+
+Then the links would be:
+Public view:
+https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=public
+
+PI view:
+https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=pi
+
+Admin view:
+https://icom.pnnl.gov/sites/default/files/icom-publication-tracker/index.html?view=admin
+
+For the public-safe package, the site will stay in public mode even if someone changes the view parameter.
+
+IF DRUPAL BLOCKS JAVASCRIPT FILES
+
+Some Drupal configurations restrict uploaded HTML or JavaScript. If that happens, ask the web person to host the files in an approved static application directory or webserver folder rather than inside a normal rich-text page body.
+
+DO NOT PASTE THE APP INTO A DRUPAL BODY FIELD
+
+The tracker is a static app made of HTML, CSS, JavaScript, data files, and images. It should be uploaded as files and linked or embedded by URL. Pasting the code into a Drupal WYSIWYG body field will usually break scripts and file paths.
+
+PI PROGRAM-AREA PDF REPORTS
+
+After hosting:
+1. Open the tracker in PI or Admin view.
+2. Go to Reports.
+3. Choose Report program area: RGMA, MSD, ESMD, or CC.
+4. Choose other filters if needed.
+5. Click PDF list.
+6. Share the downloaded PDF with the PI.
+
+SECURITY NOTE
+
+Static hosting does not provide real role-based security. Use the public-safe package for public/external users. Use the internal full package only in an access-controlled location.
